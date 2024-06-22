@@ -33,7 +33,7 @@ program_info = f"""
 
 def load_entries_from_file(file_path):
     """Load entries from a text file."""
-    print(f"Loading entries from file: {file_path}")
+    print(f"Loading File: {file_path}")
     entries = []
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
@@ -118,7 +118,7 @@ def process_file(file_path, indian_keywords):
 
     # Save the sorted entries back to the same input file
     save_entries_to_file(sorted_entries, file_path)
-    print(f"Processing completed Remaining Uid: {len(filtered_entries)}")
+    print(f"\rProcessing completed Remaining Uid: {len(filtered_entries)}\n")
 
 if __name__ == "__main__":
     # Print program information and logo at the start
