@@ -18,30 +18,47 @@ def contains_arabic(text):
     arabic_re = re.compile(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]')
     return bool(arabic_re.search(text))
 
+def remove_duplicates_from_lines(entries):
+    """Remove duplicates from each line in the list of entries."""
+    modified_entries = []
+    for entry in entries:
+        uid, name = entry.split('|', 1)
+        name_parts = name.strip().split()
+        unique_name_parts = list(set(name_parts))  # Remove duplicates from name parts
+        modified_entries.append(f"{uid}|{' '.join(unique_name_parts)}")
+    
+    return modified_entries
+
 def filter_names(entries, indian_keywords):
     """Filter out entries with Indian or Arabic names based on keywords and Arabic characters."""
     filtered_entries = []
     for entry in entries:
         uid, name = entry.split('|', 1)
-        name = name.strip()
-        if not any(keyword in name for keyword in indian_keywords) and not contains_arabic(name):
-            filtered_entries.append(f"{uid}|{name}")
+        
+        # Check if any part contains Indian keywords or Arabic characters
+        if not any(any(keyword in part for keyword in indian_keywords) or contains_arabic(part) for part in name.strip().split()):
+            filtered_entries.append(entry)
+    
     return filtered_entries
 
-def filter_and_save_to_same_file(file_path, indian_keywords):
-    """Filter entries and save to the same file."""
-    entries = load_entries_from_file(file_path)
-    filtered_entries = filter_names(entries, indian_keywords)
-    
-    # Save filtered entries back to the same input file
-    with open(file_path, 'w', encoding='utf-8') as file:
-        for entry in filtered_entries:
-            file.write(entry + '\n')
+def get_file_paths():
+    """Get input and output file paths from the user."""
+    input_file_path = input("Enter the input file path: ")
+    return input_file_path
 
 # Get input file path from the user
-input_file_path = input("Enter the input file path: ")
+input_file_path = get_file_paths()
 
-# Filter entries and save to the same input file
-filter_and_save_to_same_file(input_file_path, indian_keywords)
+# Load entries from the input file
+entries = load_entries_from_file(input_file_path)
 
-print(f"Filtered entries saved back to {input_file_path}")
+# Remove duplicates from each line in the entries
+modified_entries = remove_duplicates_from_lines(entries)
+
+# Filter out entries with Indian or Arabic names
+filtered_entries = filter_names(modified_entries, indian_keywords)
+
+# Save the filtered entries back to the same input file
+save_entries_to_file(filtered_entries, input_file_path)
+
+print(f"Filtered entries (Duplicates removed and Indian names removed) saved back to {input_file_path}")
