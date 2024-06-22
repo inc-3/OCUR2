@@ -111,10 +111,6 @@ def process_file(file_path, indian_keywords):
     filtered_entries = remove_duplicates_by_uid(entries)
     print(f"Duplicates removed. Remaining entries: {len(filtered_entries)}")
 
-    # Filter out entries with Indian or Arabic names
-    filtered_entries = filter_names(filtered_entries, indian_keywords)
-    print(f"Entries with Indian or Arabic names filtered out. Remaining entries: {len(filtered_entries)}")
-
     # Sort entries lexicographically in descending order
     sorted_entries = sort_entries_lexicographically_desc(filtered_entries)
 
