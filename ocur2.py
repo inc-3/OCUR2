@@ -1,7 +1,10 @@
 #Original Code Written by Raysul_Rabby
 
 import re
+import os
 from keywords import indian_keywords
+
+os.system('clear')
 
 def load_entries_from_file(file_path):
     """Load entries from a text file."""
