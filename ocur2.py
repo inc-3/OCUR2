@@ -84,7 +84,7 @@ def filter_names(entries, indian_keywords):
 
 def sort_entries_lexicographically_desc(entries):
     """Sort entries lexicographically in descending order."""
-    print("Sorting entries lexicographically in descending order...")
+    print("Sorting entries lexicographically in descending order")
     return sorted(entries, reverse=True)
 
 def get_file_paths():
