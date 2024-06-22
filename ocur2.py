@@ -41,6 +41,10 @@ def filter_names(entries, indian_keywords):
     
     return filtered_entries
 
+def sort_entries_lexicographically_desc(entries):
+    """Sort entries lexicographically in descending order."""
+    return sorted(entries, reverse=True)
+
 def get_file_paths():
     """Get input and output file paths from the user."""
     input_file_path = input("Enter the input file path: ")
@@ -58,7 +62,10 @@ filtered_entries = remove_duplicates_by_uid(entries)
 # Filter out entries with Indian or Arabic names
 filtered_entries = filter_names(filtered_entries, indian_keywords)
 
-# Save the filtered entries back to the same input file
-save_entries_to_file(filtered_entries, input_file_path)
+# Sort entries lexicographically in descending order
+sorted_entries = sort_entries_lexicographically_desc(filtered_entries)
 
-print(f"Filtered entries (Duplicates removed and Indian names removed) saved back to {input_file_path}")
+# Save the sorted entries back to the same input file
+save_entries_to_file(sorted_entries, input_file_path)
+
+print(f"Filtered entries (Duplicates removed, Indian names removed, and sorted descending) saved back to {input_file_path}")
