@@ -4,6 +4,7 @@ from keywords import indian_keywords  # Importing the keywords list
 
 def load_entries_from_file(file_path):
     """Load entries from a text file."""
+    print(f"Loading entries from file: {file_path}")
     entries = []
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
@@ -14,6 +15,7 @@ def load_entries_from_file(file_path):
 
 def save_entries_to_file(entries, file_path):
     """Save filtered entries to a text file."""
+    print(f"Saving filtered entries to file: {file_path}")
     try:
         with open(file_path, 'w', encoding='utf-8') as file:
             for entry in entries:
@@ -28,6 +30,7 @@ def contains_arabic(text):
 
 def remove_duplicates_by_uid(entries):
     """Remove duplicates based on the UID."""
+    print("Removing duplicates based on UID...")
     seen_uids = set()
     filtered_entries = []
     for entry in entries:
@@ -39,6 +42,7 @@ def remove_duplicates_by_uid(entries):
 
 def filter_names(entries, indian_keywords):
     """Filter out entries with Indian or Arabic names based on keywords and Arabic characters."""
+    print("Filtering out entries with Indian or Arabic names...")
     filtered_entries = []
     for entry in entries:
         uid, name = entry.split('|', 1)
@@ -51,6 +55,7 @@ def filter_names(entries, indian_keywords):
 
 def sort_entries_lexicographically_desc(entries):
     """Sort entries lexicographically in descending order."""
+    print("Sorting entries lexicographically in descending order...")
     return sorted(entries, reverse=True)
 
 def get_file_paths():
@@ -75,9 +80,11 @@ def process_file(file_path, indian_keywords):
 
     # Remove duplicates based on UID
     filtered_entries = remove_duplicates_by_uid(entries)
+    print(f"Duplicates removed. Remaining entries: {len(filtered_entries)}")
 
     # Filter out entries with Indian or Arabic names
     filtered_entries = filter_names(filtered_entries, indian_keywords)
+    print(f"Entries with Indian or Arabic names filtered out. Remaining entries: {len(filtered_entries)}")
 
     # Sort entries lexicographically in descending order
     sorted_entries = sort_entries_lexicographically_desc(filtered_entries)
@@ -85,7 +92,7 @@ def process_file(file_path, indian_keywords):
     # Save the sorted entries back to the same input file
     save_entries_to_file(sorted_entries, file_path)
 
-    print(f"Filtered entries (Duplicates removed, Indian names removed, and sorted descending) saved back to {file_path}")
+    print(f"Processing completed for file: {file_path}")
 
 # Get file paths either custom or predefined
 file_paths = get_file_paths()
