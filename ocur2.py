@@ -2,6 +2,8 @@ import os
 import re
 from keywords import indian_keywords  # Importing the keywords list
 
+os.system('clear')
+
 def load_entries_from_file(file_path):
     """Load entries from a text file."""
     print(f"Loading entries from file: {file_path}")
