@@ -71,7 +71,7 @@ def remove_duplicates_by_uid(entries):
 
 def filter_names(entries, indian_keywords):
     """Filter out entries with Indian or Arabic names based on keywords and Arabic characters."""
-    print("Filtering out entries with Indian or Arabic names...")
+    print("Filtering Out Others Country...")
     filtered_entries = []
     for entry in entries:
         uid, name = entry.split('|', 1)
