@@ -31,7 +31,7 @@ def filter_names(entries, indian_keywords):
 
 def get_file_paths():
     """Get input and output file paths from the user."""
-    input_file_path = input("Enter the input file path: "
+    input_file_path = input("Enter the input file path: ")
     output_file_path = input("Enter the output file path: ")
     return input_file_path, output_file_path
 
