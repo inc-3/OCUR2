@@ -46,26 +46,38 @@ def sort_entries_lexicographically_desc(entries):
     return sorted(entries, reverse=True)
 
 def get_file_paths():
-    """Get input and output file paths from the user."""
-    input_file_path = input("Enter the input file path: ")
-    return input_file_path
+    """Get input file paths from user input or use predefined paths."""
+    custom_path = input("Would you like to input a custom file path? (y/n): ").strip().lower()
+    if custom_path == 'y':
+        return [input("Enter the path to your file: ").strip()]
+    else:
+        return [
+            '/sdcard/1.txt', '/sdcard/2.txt', '/sdcard/3.txt', '/sdcard/4.txt',
+            '/sdcard/5.txt', '/sdcard/6.txt', '/sdcard/7.txt', '/sdcard/8.txt'
+        ]
 
-# Get input file path from the user
-input_file_path = get_file_paths()
+def process_file(file_path, indian_keywords):
+    """Process a single file: remove duplicates, filter names, and sort."""
+    # Load entries from the input file
+    entries = load_entries_from_file(file_path)
 
-# Load entries from the input file
-entries = load_entries_from_file(input_file_path)
+    # Remove duplicates based on UID
+    filtered_entries = remove_duplicates_by_uid(entries)
 
-# Remove duplicates based on UID
-filtered_entries = remove_duplicates_by_uid(entries)
+    # Filter out entries with Indian or Arabic names
+    filtered_entries = filter_names(filtered_entries, indian_keywords)
 
-# Filter out entries with Indian or Arabic names
-filtered_entries = filter_names(filtered_entries, indian_keywords)
+    # Sort entries lexicographically in descending order
+    sorted_entries = sort_entries_lexicographically_desc(filtered_entries)
 
-# Sort entries lexicographically in descending order
-sorted_entries = sort_entries_lexicographically_desc(filtered_entries)
+    # Save the sorted entries back to the same input file
+    save_entries_to_file(sorted_entries, file_path)
 
-# Save the sorted entries back to the same input file
-save_entries_to_file(sorted_entries, input_file_path)
+    print(f"Filtered entries (Duplicates removed, Indian names removed, and sorted descending) saved back to {file_path}")
 
-print(f"Filtered entries (Duplicates removed, Indian names removed, and sorted descending) saved back to {input_file_path}")
+# Get file paths either custom or predefined
+file_paths = get_file_paths()
+
+# Process each file in the list
+for file_path in file_paths:
+    process_file(file_path, indian_keywords)
