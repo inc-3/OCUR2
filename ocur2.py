@@ -3,6 +3,7 @@ import re
 from bs4 import BeautifulSoup
 from keywords import indian_keywords  # Importing the keywords list
 
+os.system('clear')
 
 # COLOURS
 GREEN = "\33[38;5;46m"
