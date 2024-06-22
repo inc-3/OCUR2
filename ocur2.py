@@ -1,17 +1,25 @@
+import os
 import re
 from keywords import indian_keywords  # Importing the keywords list
 
 def load_entries_from_file(file_path):
     """Load entries from a text file."""
-    with open(file_path, 'r', encoding='utf-8') as file:
-        entries = file.readlines()
+    entries = []
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            entries = file.readlines()
+    except FileNotFoundError:
+        print(f"File '{file_path}' not found.")
     return [entry.strip() for entry in entries]
 
 def save_entries_to_file(entries, file_path):
     """Save filtered entries to a text file."""
-    with open(file_path, 'w', encoding='utf-8') as file:
-        for entry in entries:
-            file.write(entry + '\n')
+    try:
+        with open(file_path, 'w', encoding='utf-8') as file:
+            for entry in entries:
+                file.write(entry + '\n')
+    except IOError:
+        print(f"Error saving to file '{file_path}'.")
 
 def contains_arabic(text):
     """Check if the text contains Arabic characters."""
@@ -60,6 +68,10 @@ def process_file(file_path, indian_keywords):
     """Process a single file: remove duplicates, filter names, and sort."""
     # Load entries from the input file
     entries = load_entries_from_file(file_path)
+
+    # If entries are empty (indicating file not found or other error), return
+    if not entries:
+        return
 
     # Remove duplicates based on UID
     filtered_entries = remove_duplicates_by_uid(entries)
