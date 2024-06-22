@@ -18,16 +18,16 @@ def contains_arabic(text):
     arabic_re = re.compile(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]')
     return bool(arabic_re.search(text))
 
-def remove_duplicates_from_lines(entries):
-    """Remove duplicates from each line in the list of entries."""
-    modified_entries = []
+def remove_duplicates_by_uid(entries):
+    """Remove duplicates based on the UID."""
+    seen_uids = set()
+    filtered_entries = []
     for entry in entries:
-        uid, name = entry.split('|', 1)
-        name_parts = name.strip().split()
-        unique_name_parts = list(set(name_parts))  # Remove duplicates from name parts
-        modified_entries.append(f"{uid}|{' '.join(unique_name_parts)}")
-    
-    return modified_entries
+        uid = entry.split('|', 1)[0]
+        if uid not in seen_uids:
+            seen_uids.add(uid)
+            filtered_entries.append(entry)
+    return filtered_entries
 
 def filter_names(entries, indian_keywords):
     """Filter out entries with Indian or Arabic names based on keywords and Arabic characters."""
@@ -52,11 +52,11 @@ input_file_path = get_file_paths()
 # Load entries from the input file
 entries = load_entries_from_file(input_file_path)
 
-# Remove duplicates from each line in the entries
-modified_entries = remove_duplicates_from_lines(entries)
+# Remove duplicates based on UID
+filtered_entries = remove_duplicates_by_uid(entries)
 
 # Filter out entries with Indian or Arabic names
-filtered_entries = filter_names(modified_entries, indian_keywords)
+filtered_entries = filter_names(filtered_entries, indian_keywords)
 
 # Save the filtered entries back to the same input file
 save_entries_to_file(filtered_entries, input_file_path)
