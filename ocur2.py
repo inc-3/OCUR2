@@ -1,10 +1,5 @@
-#Original Code Written by Raysul_Rabby
-
 import re
-import os
-from keywords import indian_keywords
-
-os.system('clear')
+from keywords import indian_keywords  # Importing the keywords list
 
 def load_entries_from_file(file_path):
     """Load entries from a text file."""
@@ -27,27 +22,26 @@ def filter_names(entries, indian_keywords):
     """Filter out entries with Indian or Arabic names based on keywords and Arabic characters."""
     filtered_entries = []
     for entry in entries:
-        name = entry.split('|')[1]
+        uid, name = entry.split('|', 1)
+        name = name.strip()
         if not any(keyword in name for keyword in indian_keywords) and not contains_arabic(name):
-            filtered_entries.append(entry)
+            filtered_entries.append(f"{uid}|{name}")
     return filtered_entries
 
-def get_file_paths():
-    """Get input and output file paths from the user."""
-    input_file_path = input("Enter the input file path: ")
-    output_file_path = input("Enter the output file path: ")
-    return input_file_path, output_file_path
+def filter_and_save_to_same_file(file_path, indian_keywords):
+    """Filter entries and save to the same file."""
+    entries = load_entries_from_file(file_path)
+    filtered_entries = filter_names(entries, indian_keywords)
+    
+    # Save filtered entries back to the same input file
+    with open(file_path, 'w', encoding='utf-8') as file:
+        for entry in filtered_entries:
+            file.write(entry + '\n')
 
-# Get input and output file paths from the user
-input_file_path, output_file_path = get_file_paths()
+# Get input file path from the user
+input_file_path = input("Enter the input file path: ")
 
-# Load entries from the input file
-entries = load_entries_from_file(input_file_path)
+# Filter entries and save to the same input file
+filter_and_save_to_same_file(input_file_path, indian_keywords)
 
-# Filter out entries with Indian or Arabic names
-filtered_entries = filter_names(entries, indian_keywords)
-
-# Save the filtered entries to the output file
-save_entries_to_file(filtered_entries, output_file_path)
-
-print(f"Filtered entries saved to {output_file_path}")
+print(f"Filtered entries saved back to {input_file_path}")
