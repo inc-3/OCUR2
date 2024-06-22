@@ -71,7 +71,7 @@ def remove_duplicates_by_uid(entries):
 
 def filter_names(entries, indian_keywords):
     """Filter out entries with Indian or Arabic names based on keywords and Arabic characters."""
-    print("Filtering Out Others Country...")
+    print("Filtering Out Others Country Uid...")
     filtered_entries = []
     for entry in entries:
         uid, name = entry.split('|', 1)
@@ -109,19 +109,16 @@ def process_file(file_path, indian_keywords):
 
     # Remove duplicates based on UID
     filtered_entries = remove_duplicates_by_uid(entries)
-    print(f"Duplicates removed. Remaining entries: {len(filtered_entries)}")
 
     # Filter out entries with Indian or Arabic names
     filtered_entries = filter_names(filtered_entries, indian_keywords)
-    print(f"Entries with Indian or Arabic names filtered out. Remaining entries: {len(filtered_entries)}")
 
     # Sort entries lexicographically in descending order
     sorted_entries = sort_entries_lexicographically_desc(filtered_entries)
 
     # Save the sorted entries back to the same input file
     save_entries_to_file(sorted_entries, file_path)
-
-    print(f"Processing completed for file: {file_path}")
+    print(f"Processing completed Remaining Uid: {len(filtered_entries)}")
 
 if __name__ == "__main__":
     # Print program information and logo at the start
