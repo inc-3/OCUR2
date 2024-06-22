@@ -1,8 +1,34 @@
 import os
 import re
+from bs4 import BeautifulSoup
 from keywords import indian_keywords  # Importing the keywords list
 
-os.system('clear')
+
+# COLOURS
+GREEN = "\33[38;5;46m"
+WHITE = "\33[1;97m"
+RED = "\33[1;91m"
+BLUE = "\33[1;97m"
+CYAN = "\33[1;97m"
+X = f"{WHITE}[\33[1;91m~{WHITE}]"
+
+# LINE
+line = "\33[1;97m═" * 40
+
+# Logo and program information
+program_info = f"""
+{WHITE}
+▀█▀ ░█▄─░█ ░█▀▀█ █▀▀█ 
+░█─ ░█░█░█ ░█─── ──▀▄ 
+▄█▄ ░█──▀█ ░█▄▄█ █▄▄█
+
+{line}
+{WHITE}[\33[1;91m~{WHITE}] AUTHOR    {WHITE} :  {GREEN}INCEPTION
+{WHITE}[\33[1;91m~{WHITE}] VERSION   {WHITE} :  {RED}BETA
+{WHITE}[\33[1;91m~{WHITE}] FEATURE   {WHITE} : {WHITE} OUT C UID RMVR
+{line}
+"""
+
 
 def load_entries_from_file(file_path):
     """Load entries from a text file."""
@@ -96,9 +122,16 @@ def process_file(file_path, indian_keywords):
 
     print(f"Processing completed for file: {file_path}")
 
-# Get file paths either custom or predefined
-file_paths = get_file_paths()
+if __name__ == "__main__":
+    # Print program information and logo at the start
+    print(program_info)
 
-# Process each file in the list
-for file_path in file_paths:
-    process_file(file_path, indian_keywords)
+    # Get file paths either custom or predefined
+    file_paths = get_file_paths()
+
+    # Process each file in the list
+    for file_path in file_paths:
+        process_file(file_path, indian_keywords)
+
+    # Print completion message at the end
+    print(f"{X} {GREEN}Program completed successfully! Thank you for using.")
