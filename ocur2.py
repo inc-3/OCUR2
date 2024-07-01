@@ -9,7 +9,6 @@ from keywords import indian_keywords
 
 # COLOURS
 GREEN = "\33[38;5;46m"
-green_text = "\033[92m"
 reset_text = "\033[0m"
 WHITE = "\33[1;97m"
 RED = "\33[1;91m"
@@ -27,7 +26,7 @@ logo = f"""
 
 {line}
 {WHITE}[\33[1;91m~{WHITE}] AUTHOR    {WHITE} :  {GREEN}INCEPTION
-{WHITE}[\33[1;91m~{WHITE}] VERSION   {WHITE} :  {RED}BETA
+{WHITE}[\33[1;91m~{WHITE}] VERSION   {WHITE} :  {RED}2
 {WHITE}[\33[1;91m~{WHITE}] FEATURE   {WHITE} : {WHITE} OUT C UID RMVR
 {line}
 """
