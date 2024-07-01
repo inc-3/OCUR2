@@ -47,6 +47,7 @@ def display_spinner(duration=2, delay=0.1):
             sys.stdout.write(char)
             sys.stdout.flush()
             time.sleep(delay)
+            sys.stdout.write("\b")
             sys.stdout.flush()
 
 # Function to read data from a file
@@ -76,6 +77,7 @@ def filter_bangladeshi_names(data):
     print("Saving Only Bangladeshi Uid", end="")
     animate_message("...")
     display_spinner()
+    print(" Only Bangladeshi Uid's Saved!")
     filtered_data = []
     for entry in data:
         if '|' in entry:
