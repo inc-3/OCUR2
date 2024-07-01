@@ -30,6 +30,7 @@ logo = f"""
 
 # Function to read data from a file
 def read_data_from_file(file_path):
+    print(f"Loading File: {file_path}")
     with open(file_path, 'r') as file:
         data = file.readlines()
     return [line.strip() for line in data]
@@ -63,7 +64,15 @@ def filter_bangladeshi_names(data):
 
 # Function to remove duplicate lines
 def remove_duplicate_lines(data):
-    return list(set(data))
+    print("Removing duplicates based on UID...")
+    seen_uids = set()
+    filtered_data = []
+    for entry in data:
+        uid = entry.split('|', 1)[0]
+        if uid not in seen_uids:
+            seen_uids.add(uid)
+            filtered_data.append(entry)
+    return filtered_data
 
 # Function to sort lines lexicographically in descending order
 def sort_lexicographically_descending(data):
@@ -120,8 +129,6 @@ def filter_names(data, indian_keywords):
     return filtered_data
 
 def sort_data_lexicographically_desc(data):
-    """Sort data lexicographically in descending order."""
-    print("Sorting data lexicographically in descending order")
     return sorted(data, reverse=True)
 
 def method_1():
@@ -136,9 +143,9 @@ def method_1():
         data = remove_duplicate_lines(data)
         filtered_data = filter_bangladeshi_names(data)
         filtered_data = sort_lexicographically_descending(filtered_data)
-        save_to_same_file(filtered_data, file_path)
-        print(f"Filtered data saved successfully for {file_path}!")
-
+        save_data_to_file(sorted_data, file_path)
+        print(f"\rProcessing completed Remaining Uid: {len(filtered_data)}\n")
+        
 def method_2():
     file_paths = input_file_path()
     if isinstance(file_paths, str):  # If a single custom file path is provided
