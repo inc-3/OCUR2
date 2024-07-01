@@ -153,9 +153,10 @@ def method_1():
         print("The following files were not found:")
         for file_path in not_found_files:
             print(file_path)
-        return_to_menu = input("Do you want to return to the main menu? (y/n): ").strip().lower()
-        if return_to_menu != 'y':
-            sys.exit(0)  # Exit the program
+    
+    return_to_menu = input("Do you want to return to the main menu? (y/n): ").strip().lower()
+    if return_to_menu != 'y':
+        sys.exit(0)  # Exit the program
 
 def method_2():
     file_paths = input_file_path()
@@ -179,9 +180,10 @@ def method_2():
         print("The following files were not found:")
         for file_path in not_found_files:
             print(file_path)
-        return_to_menu = input("Do you want to return to the main menu? (y/n): ").strip().lower()
-        if return_to_menu != 'y':
-            sys.exit(0)  # Exit the program
+    
+    return_to_menu = input("Do you want to return to the main menu? (y/n): ").strip().lower()
+    if return_to_menu != 'y':
+        sys.exit(0)  # Exit the program
 
 def main():
     sys.stdout.write('\x1b]2; INCEPTION \x07')
