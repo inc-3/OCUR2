@@ -62,11 +62,11 @@ def read_data_from_file(file_path):
 def input_file_path():
     custom_path = input("Would you like to input a custom file path? (y/n): ").strip().lower()
     if custom_path == 'y':
-        clear_screen_and_print_logo()
+        os.system("clear")  # Clear the screen after input
         file_path = input("Enter the path to your file: ").strip()
         return file_path
     else:
-        clear_screen_and_print_logo()
+        os.system("clear")  # Clear the screen after input
         return ['/sdcard/1.txt', '/sdcard/2.txt', '/sdcard/3.txt', '/sdcard/4.txt',
                 '/sdcard/5.txt', '/sdcard/6.txt', '/sdcard/7.txt', '/sdcard/8.txt']
 
@@ -161,9 +161,8 @@ def method_1():
         print("The following files were not found:")
         for file_path in not_found_files:
             print(file_path)
-        return_to_menu = input("Do you want to return to the main menu? (y/n): ").strip().lower()
-        if return_to_menu != 'y':
-            sys.exit(0)  # Exit the program
+        input("Press Enter to go back to the main menu...")
+        main()  # Go back to the main menu
 
 def method_2():
     clear_screen_and_print_logo()
@@ -188,9 +187,8 @@ def method_2():
         print("The following files were not found:")
         for file_path in not_found_files:
             print(file_path)
-        return_to_menu = input("Do you want to return to the main menu? (y/n): ").strip().lower()
-        if return_to_menu != 'y':
-           os.system('python ocur2.py')
+        input("Press Enter to go back to the main menu...")
+        main()  # Go back to the main menu
 
 def main():
     sys.stdout.write('\x1b]2; INCEPTION \x07')
