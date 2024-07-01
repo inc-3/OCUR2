@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 import re
 from bs4 import BeautifulSoup
 from BD import common_bangladeshi_names
@@ -27,6 +28,26 @@ logo = f"""
 {WHITE}[\33[1;91m~{WHITE}] FEATURE   {WHITE} : {WHITE} OUT C UID RMVR
 {line}
 """
+# Function to simulate an animation
+def animate_message(message, delay=0.5, animation_length=3):
+    sys.stdout.write(message)
+    sys.stdout.flush()
+    for i in range(animation_length):
+        time.sleep(delay)
+        sys.stdout.write(".")
+        sys.stdout.flush()
+
+# Function to display a spinner animation
+def display_spinner(duration=2, delay=0.1):
+    spinner = "|/-\\"
+    end_time = time.time() + duration
+    while time.time() < end_time:
+        for char in spinner:
+            sys.stdout.write(char)
+            sys.stdout.flush()
+            time.sleep(delay)
+            sys.stdout.write("\b")  # Erase the last character
+            sys.stdout.flush()
 
 # Function to read data from a file
 def read_data_from_file(file_path):
@@ -52,6 +73,9 @@ def is_bangladeshi(name):
 
 # Function to filter out non-Bangladeshi names
 def filter_bangladeshi_names(data):
+    print("Saving Only Bangladeshi Uid", end="")
+    animate_message("...")
+    display_spinner()
     filtered_data = []
     for entry in data:
         if '|' in entry:
@@ -62,36 +86,11 @@ def filter_bangladeshi_names(data):
             print(f"Ignoring line: {entry} (Does not contain expected format)")
     return filtered_data
 
-# Function to remove duplicate lines
-def remove_duplicate_lines(data):
-    print("Removing duplicates based on UID...")
-    seen_uids = set()
-    filtered_data = []
-    for entry in data:
-        uid = entry.split('|', 1)[0]
-        if uid not in seen_uids:
-            seen_uids.add(uid)
-            filtered_data.append(entry)
-    return filtered_data
-
 # Function to sort lines lexicographically in descending order
 def sort_lexicographically_descending(data):
     return sorted(data, reverse=True)
 
-# Function to save filtered data to the same file
-def save_to_same_file(filtered_data, file_path):
-    """Save filtered data to a text file."""
-    print(f"Saving filtered data to file: {file_path}")
-    try:
-        with open(file_path, 'w', encoding='utf-8') as file:
-            for entry in filtered_data:
-                file.write(entry + '\n')
-    except IOError:
-        print(f"Error saving to file '{file_path}'.")
-
 def save_data_to_file(data, file_path):
-    """Save filtered data to a text file."""
-    print(f"Saving filtered data to file: {file_path}")
     try:
         with open(file_path, 'w', encoding='utf-8') as file:
             for entry in data:
@@ -104,8 +103,7 @@ def contains_arabic(text):
     return bool(arabic_re.search(text))
 
 def remove_duplicates_by_uid(data):
-    """Remove duplicates based on the UID."""
-    print("Removing duplicates based on UID...")
+    print("Removing duplicates UID...")
     seen_uids = set()
     filtered_data = []
     for entry in data:
@@ -116,8 +114,7 @@ def remove_duplicates_by_uid(data):
     return filtered_data
 
 def filter_names(data, indian_keywords):
-    """Filter out data with Indian or Arabic names based on keywords and Arabic characters."""
-    print("Filtering Out Others Country Uid...")
+    print("Removing Indian Uid...")
     filtered_data = []
     for entry in data:
         uid, name = entry.split('|', 1)
@@ -140,7 +137,7 @@ def method_1():
             print(f"File not found: {file_path}")
             continue
         data = read_data_from_file(file_path)
-        data = remove_duplicate_lines(data)
+        data = remove_duplicates_by_uid(data)
         filtered_data = filter_bangladeshi_names(data)
         filtered_data = sort_lexicographically_descending(filtered_data)
         save_data_to_file(filtered_data, file_path)
@@ -155,7 +152,7 @@ def method_2():
             print(f"File not found: {file_path}")
             continue
         data = read_data_from_file(file_path)
-        data = remove_duplicate_lines(data)
+        data = remove_duplicates_by_uid(data)
         filtered_data = filter_names(data, indian_keywords)
         sorted_data = sort_data_lexicographically_desc(filtered_data)
         save_data_to_file(sorted_data, file_path)
@@ -168,9 +165,12 @@ def main():
     X = f"{WHITE}[\33[1;91m~{WHITE}]"
     def linex(): print(line)
     def clear(): os.system("clear"); print(logo)
-    clear()  # Clear the screen and print the logo
+    clear()
 
-    method_choice = input("Choose the method to run (1 or 2): ").strip()
+    print('[1] Save Only Bagnladeshi Uid')
+    print('[2] Remove Indian Uid')
+    method_choice = input().strip()
+
     if method_choice == '1':
         method_1()
     elif method_choice == '2':
@@ -178,6 +178,5 @@ def main():
     else:
         print("Invalid choice. Please choose 1 or 2.")
 
-# Execute the main function
 if __name__ == "__main__":
     main()
