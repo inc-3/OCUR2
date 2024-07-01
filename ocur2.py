@@ -30,7 +30,7 @@ logo = f"""
 {line}
 """
 # Function to simulate an animation
-def animate_message(message, delay=0.5, animation_length=2):
+def animate_message(message, delay=0.5, animation_length=3):
     sys.stdout.write(message)
     sys.stdout.flush()
     for i in range(animation_length):
@@ -38,16 +38,16 @@ def animate_message(message, delay=0.5, animation_length=2):
         sys.stdout.write(".")
         sys.stdout.flush()
 
-# Function to display a spinner animation for a fixed duration
+# Function to display a spinner animation
 def display_spinner(duration=2, delay=0.1):
     spinner = "|/-\\"
-    start_time = time.time()
-    while time.time() - start_time < duration:
+    end_time = time.time() + duration
+    while time.time() < end_time:
         for char in spinner:
             sys.stdout.write(char)
             sys.stdout.flush()
             time.sleep(delay)
-            sys.stdout.write("\b")
+            sys.stdout.write("\b")  # Erase the last character
             sys.stdout.flush()
 
 # Function to read data from a file
