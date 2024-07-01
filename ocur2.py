@@ -153,11 +153,9 @@ def method_1():
         print("The following files were not found:")
         for file_path in not_found_files:
             print(file_path)
-    
-    return_to_menu = input("Do you want to return to the main menu? (y/n): ").strip().lower()
-    if return_to_menu == 'y':
-        clear_screen_and_print_logo()
-        main()
+        return_to_menu = input("Do you want to return to the main menu? (y/n): ").strip().lower()
+        if return_to_menu != 'y':
+            sys.exit(0)  # Exit the program
 
 def method_2():
     file_paths = input_file_path()
@@ -181,51 +179,29 @@ def method_2():
         print("The following files were not found:")
         for file_path in not_found_files:
             print(file_path)
-    
-    return_to_menu = input("Do you want to return to the main menu? (y/n): ").strip().lower()
-    if return_to_menu == 'y':
-        clear_screen_and_print_logo()
-        main()
-
-def clear_screen_and_print_logo():
-    os.system("clear")  # Clear the screen
-    print(logo)  # Print your logo after clearing
+        return_to_menu = input("Do you want to return to the main menu? (y/n): ").strip().lower()
+        if return_to_menu != 'y':
+            sys.exit(0)  # Exit the program
 
 def main():
     sys.stdout.write('\x1b]2; INCEPTION \x07')
     line = f"{WHITE}━" * 40
     X = f"{WHITE}[\33[1;91m~{WHITE}]"
-    
-    def linex(): 
-        print(line)
-    
-    def clear(): 
-        os.system("clear")  # Clear the screen
-        print(logo)  # Print your logo after clearing
-
+    def linex(): print(line)
+    def clear(): os.system("clear"); print(logo)
     clear()
 
-    while True:
-        print('[1] Save Only Bangladeshi Uid')
-        print('[2] Remove Indian Uid')
-        print()  # Add a new line for spacing
+    print('[1] Save Only Bagnladeshi Uid')
+    print('[2] Remove Indian Uid''\n')
 
-        method_choice = input('[?] Your Choice: ').strip()
+    method_choice = input('[?] Your Choice : ').strip()
 
-        if method_choice == '1':
-            clear_above_lines(4)
-            method_1()
-        elif method_choice == '2':
-            clear_above_lines(4)  # Clear menu options, prompt, and input line
-            method_2()
-        else:
-            break
-
-def clear_above_lines(n):
-    # ANSI escape code: move cursor up 'n' lines and clear each line
-    for _ in range(n):
-        sys.stdout.write('\x1b[1A')  # Move cursor up one line
-        sys.stdout.write('\x1b[2K')  # Clear the line
+    if method_choice == '1':
+        method_1()
+    elif method_choice == '2':
+        method_2()
+    else:
+        print("Invalid choice. Please choose 1 or 2.")
 
 if __name__ == "__main__":
     main()
