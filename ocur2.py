@@ -157,7 +157,7 @@ def method_1():
             filtered_data = filter_bangladeshi_names(data)
             filtered_data = sort_lexicographically_descending(filtered_data)
             save_data_to_file(filtered_data, file_path)
-            print(f"\rProcessing completed Remaining Uid: {green_text}{len(filtered_data)}{reset_text}\n")
+            print(f"\rProcessing completed Remaining Uid: {GREEN}{len(filtered_data)}{reset_text}\n")
     if not_found_files:
         print("The following files were not found:")
         for file_path in not_found_files:
@@ -182,7 +182,7 @@ def method_2():
             filtered_data = filter_names(data, indian_keywords)
             sorted_data = sort_data_lexicographically_desc(filtered_data)
             save_data_to_file(sorted_data, file_path)
-            print(f"\rProcessing completed Remaining Uid: {GREEN}{len(filtered_data)}\n")
+            print(f"\rProcessing completed Remaining Uid: {GREEN}{len(filtered_data)}{reset_text}\n")
     
     if not_found_files:
         print("The following files were not found:")
