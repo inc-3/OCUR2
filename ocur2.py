@@ -160,26 +160,41 @@ def method_2():
         save_data_to_file(sorted_data, file_path)
         print(f"\rProcessing completed Remaining Uid: {len(filtered_data)}\n")
 
-# Main function
 def main():
     sys.stdout.write('\x1b]2; INCEPTION \x07')
     line = f"{WHITE}━" * 40
     X = f"{WHITE}[\33[1;91m~{WHITE}]"
-    def linex(): print(line)
-    def clear(): os.system("clear"); print(logo)
+    def linex(): 
+        print(line)
+    def clear(): 
+        os.system("clear")  # Clear the screen
+        print(logo)  # Print your logo after clearing
+
     clear()
 
-    print('[1] Save Only Bagnladeshi Uid')
-    print('[2] Remove Indian Uid''\n')
+    while True:
+        print('[1] Save Only Bangladeshi Uid')
+        print('[2] Remove Indian Uid')
+        print()  # Add a new line for spacing
 
-    method_choice = input('[?] Your Choice : ').strip()
+        method_choice = input('[?] Your Choice: ').strip()
 
-    if method_choice == '1':
-        method_1()
-    elif method_choice == '2':
-        method_2()
-    else:
-        print("Invalid choice. Please choose 1 or 2.")
+        if method_choice == '1':
+            clear_above_lines(4)
+            method_1()
+              # Clear the screen after method_1 is executed
+        elif method_choice == '2':
+            clear_above_lines(4)  # Clear menu options, prompt, and input line
+            method_2()
+        else:
+             exit
+
+        
+def clear_above_lines(n):
+    # ANSI escape code: move cursor up 'n' lines and clear each line
+    for _ in range(n):
+        sys.stdout.write('\x1b[1A')  # Move cursor up one line
+        sys.stdout.write('\x1b[2K')  # Clear the line
 
 if __name__ == "__main__":
     main()
