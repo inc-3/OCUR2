@@ -1,3 +1,4 @@
+import os
 import sys
 import threading
 import time
@@ -130,7 +131,12 @@ def filter_names(data, indian_keywords):
 def sort_data_lexicographically_desc(data):
     return sorted(data, reverse=True)
 
+def clear_screen_and_print_logo():
+    os.system("clear")  # Clear the screen
+    print(logo)         # Print the logo
+
 def method_1():
+    clear_screen_and_print_logo()
     file_paths = input_file_path()
     if isinstance(file_paths, str):  # If a single custom file path is provided
         file_paths = [file_paths]
@@ -157,6 +163,7 @@ def method_1():
             sys.exit(0)  # Exit the program
 
 def method_2():
+    clear_screen_and_print_logo()
     file_paths = input_file_path()
     if isinstance(file_paths, str):  # If a single custom file path is provided
         file_paths = [file_paths]
@@ -184,14 +191,10 @@ def method_2():
 
 def main():
     sys.stdout.write('\x1b]2; INCEPTION \x07')
-    line = f"{WHITE}━" * 40
-    X = f"{WHITE}[\33[1;91m~{WHITE}]"
-    def linex(): print(line)
-    def clear(): os.system("clear"); print(logo)
-    clear()
+    clear_screen_and_print_logo()
 
-    print('[1] Save Only Bagnladeshi Uid')
-    print('[2] Remove Indian Uid''\n')
+    print('[1] Save Only Bangladeshi Uid')
+    print('[2] Remove Indian Uid\n')
 
     method_choice = input('[?] Your Choice : ').strip()
 
