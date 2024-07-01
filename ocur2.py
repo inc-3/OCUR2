@@ -47,7 +47,6 @@ def display_spinner(duration=2, delay=0.1):
             sys.stdout.write(char)
             sys.stdout.flush()
             time.sleep(delay)
-            sys.stdout.write("\b")  # Erase the last character
             sys.stdout.flush()
 
 # Function to read data from a file
