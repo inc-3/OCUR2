@@ -3,7 +3,6 @@ import os
 import sys
 import re
 from bs4 import BeautifulSoup
-from BD import common_bangladeshi_names
 
 # COLOURS
 GREEN = "\33[38;5;46m"
