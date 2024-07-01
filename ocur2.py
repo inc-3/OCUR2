@@ -1,9 +1,9 @@
+#original code write by INCEPTION
 import os
+import sys
 import re
 from bs4 import BeautifulSoup
-from keywords import indian_keywords  # Importing the keywords list
-
-os.system('clear')
+from BD import common_bangladeshi_names
 
 # COLOURS
 GREEN = "\33[38;5;46m"
@@ -15,9 +15,7 @@ X = f"{WHITE}[\33[1;91m~{WHITE}]"
 
 # LINE
 line = "\33[1;97m═" * 40
-
-# Logo and program information
-program_info = f"""
+logo = f"""
 {WHITE}
 ▀█▀ ░█▄─░█ ░█▀▀█ █▀▀█ 
 ░█─ ░█░█░█ ░█─── ──▀▄ 
@@ -30,17 +28,52 @@ program_info = f"""
 {line}
 """
 
+# Function to read data from a file
+def read_data_from_file(file_path):
+    with open(file_path, 'r') as file:
+        data = file.readlines()
+    return [line.strip() for line in data]
 
-def load_entries_from_file(file_path):
-    """Load entries from a text file."""
-    print(f"Loading File: {file_path}")
-    entries = []
-    try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            entries = file.readlines()
-    except FileNotFoundError:
-        print(f"File '{file_path}' not found.")
-    return [entry.strip() for entry in entries]
+# Function to prompt user to input file path
+def input_file_path():
+    custom_path = input("Would you like to input a custom file path? (y/n): ").strip().lower()
+    if custom_path == 'y':
+        return input("Enter the path to your file: ").strip()
+    else:
+        return ['/sdcard/1.txt', '/sdcard/2.txt', '/sdcard/3.txt', '/sdcard/4.txt',
+                '/sdcard/5.txt', '/sdcard/6.txt', '/sdcard/7.txt', '/sdcard/8.txt']
+
+def is_bangladeshi(name):
+    # Define a regex pattern for Bengali characters
+    bengali_pattern = re.compile("[\u0980-\u09FF]")
+    # Check if the name contains Bengali characters or is in the common Bangladeshi names set
+    return bool(bengali_pattern.search(name)) or any(common_name in name for common_name in common_bangladeshi_names)
+
+# Function to filter out non-Bangladeshi names
+def filter_bangladeshi_names(data):
+    filtered_data = []
+    for entry in data:
+        if '|' in entry:
+            number, name = entry.split('|', 1)  # Split only at the first occurrence of '|'
+            if is_bangladeshi(name):
+                filtered_data.append(entry)
+        else:
+            print(f"Ignoring line: {entry} (Does not contain expected format)")
+    return filtered_data
+
+# Function to remove duplicate lines
+def remove_duplicate_lines(data):
+    return list(set(data))
+
+# Function to sort lines lexicographically in descending order
+def sort_lexicographically_descending(data):
+    return sorted(data, reverse=True)
+
+# Function to save filtered data to the same file
+def save_to_same_file(filtered_data, file_path):
+    with open(file_path, 'w') as file:
+        for entry in filtered_data:
+            file.write(entry + '\n')
 
 def save_entries_to_file(entries, file_path):
     """Save filtered entries to a text file."""
@@ -86,50 +119,54 @@ def sort_entries_lexicographically_desc(entries):
     """Sort entries lexicographically in descending order."""
     print("Sorting entries lexicographically in descending order")
     return sorted(entries, reverse=True)
+        
 
-def get_file_paths():
-    """Get input file paths from user input or use predefined paths."""
-    custom_path = input("Would you like to input a custom file path? (y/n): ").strip().lower()
-    if custom_path == 'y':
-        return [input("Enter the path to your file: ").strip()]
-    else:
-        return [
-            '/sdcard/1.txt', '/sdcard/2.txt', '/sdcard/3.txt', '/sdcard/4.txt',
-            '/sdcard/5.txt', '/sdcard/6.txt', '/sdcard/7.txt', '/sdcard/8.txt'
-        ]
+def method_1():
+    file_paths = input_file_path()
+    if isinstance(file_paths, str):  # If a single custom file path is provided
+        file_paths = [file_paths]
+    for file_path in file_paths:
+        if not os.path.exists(file_path):
+            print(f"File not found: {file_path}")
+            continue
+        data = read_data_from_file(file_path)
+        data = remove_duplicate_lines(data)
+        filtered_data = filter_bangladeshi_names(data)
+        filtered_data = sort_lexicographically_descending(filtered_data)
+        save_to_same_file(filtered_data, file_path)
+        print(f"Filtered data saved successfully for {file_path}!")
 
-def process_file(file_path, indian_keywords):
-    """Process a single file: remove duplicates, filter names, and sort."""
-    # Load entries from the input file
-    entries = load_entries_from_file(file_path)
-
-    # If entries are empty (indicating file not found or other error), return
-    if not entries:
-        return
-
-    # Remove duplicates based on UID
+def method_2():
+    file_paths = input_file_path()
+    if isinstance(file_paths, str):  # If a single custom file path is provided
+        file_paths = [file_paths]
+    for file_path in file_paths:
+        if not os.path.exists(file_path):
+            print(f"File not found: {file_path}")
+            continue
     filtered_entries = remove_duplicates_by_uid(entries)
-
-    # Filter out entries with Indian or Arabic names
     filtered_entries = filter_names(filtered_entries, indian_keywords)
-
-    # Sort entries lexicographically in descending order
     sorted_entries = sort_entries_lexicographically_desc(filtered_entries)
-
-    # Save the sorted entries back to the same input file
     save_entries_to_file(sorted_entries, file_path)
     print(f"\rProcessing completed Remaining Uid: {len(filtered_entries)}\n")
 
+# Main function
+def main():
+    sys.stdout.write('\x1b]2; INCEPTION \x07')
+    line = f"{WHITE}━" * 40
+    X = f"{WHITE}[\33[1;91m~{WHITE}]"
+    def linex(): print(line)
+    def clear(): os.system("clear"); print(logo)
+    clear()  # Clear the screen and print the logo
+
+    method_choice = input("Choose the method to run (1 or 2): ").strip()
+    if method_choice == '1':
+        method_1()
+    elif method_choice == '2':
+        method_2()
+    else:
+        print("Invalid choice. Please choose 1 or 2.")
+
+# Execute the main function
 if __name__ == "__main__":
-    # Print program information and logo at the start
-    print(program_info)
-
-    # Get file paths either custom or predefined
-    file_paths = get_file_paths()
-
-    # Process each file in the list
-    for file_path in file_paths:
-        process_file(file_path, indian_keywords)
-
-    # Print completion message at the end
-    print(f"{X} {GREEN}Program completed successfully! Thank you for using.")
+    main()
