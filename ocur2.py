@@ -76,7 +76,7 @@ def is_bangladeshi(name):
 def filter_bangladeshi_names(data):
     print("Saving Only Bangladeshi Uid", end="")
     animate_message("...")
-    spinner_thread.join()
+    display_spinner()
     filtered_data = []
     for entry in data:
         if '|' in entry:
