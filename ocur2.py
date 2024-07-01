@@ -155,8 +155,9 @@ def method_1():
             print(file_path)
     
     return_to_menu = input("Do you want to return to the main menu? (y/n): ").strip().lower()
-    if return_to_menu != 'y':
-        sys.exit(0)  # Exit the program
+    if return_to_menu == 'y':
+        clear_screen_and_print_logo()
+        main()
 
 def method_2():
     file_paths = input_file_path()
@@ -182,8 +183,13 @@ def method_2():
             print(file_path)
     
     return_to_menu = input("Do you want to return to the main menu? (y/n): ").strip().lower()
-    if return_to_menu != 'y':
-        sys.exit(0)  # Exit the program
+    if return_to_menu == 'y':
+        clear_screen_and_print_logo()
+        main()
+
+def clear_screen_and_print_logo():
+    os.system("clear")  # Clear the screen
+    print(logo)  # Print your logo after clearing
 
 def main():
     sys.stdout.write('\x1b]2; INCEPTION \x07')
