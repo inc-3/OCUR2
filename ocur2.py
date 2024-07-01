@@ -190,7 +190,7 @@ def method_2():
             print(file_path)
         return_to_menu = input("Do you want to return to the main menu? (y/n): ").strip().lower()
         if return_to_menu != 'y':
-            sys.exit(0)  # Exit the program
+           os.system('python ocur2.py')
 
 def main():
     sys.stdout.write('\x1b]2; INCEPTION \x07')
