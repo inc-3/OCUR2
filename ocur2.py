@@ -1,5 +1,6 @@
 import os
 import sys
+import threading
 import time
 import re
 from bs4 import BeautifulSoup
@@ -29,7 +30,7 @@ logo = f"""
 {line}
 """
 # Function to simulate an animation
-def animate_message(message, delay=0.5, animation_length=3):
+def animate_message(message, delay=0.5, animation_length=2):
     sys.stdout.write(message)
     sys.stdout.flush()
     for i in range(animation_length):
@@ -37,11 +38,11 @@ def animate_message(message, delay=0.5, animation_length=3):
         sys.stdout.write(".")
         sys.stdout.flush()
 
-# Function to display a spinner animation
+# Function to display a spinner animation for a fixed duration
 def display_spinner(duration=2, delay=0.1):
     spinner = "|/-\\"
-    end_time = time.time() + duration
-    while time.time() < end_time:
+    start_time = time.time()
+    while time.time() - start_time < duration:
         for char in spinner:
             sys.stdout.write(char)
             sys.stdout.flush()
@@ -75,7 +76,7 @@ def is_bangladeshi(name):
 def filter_bangladeshi_names(data):
     print("Saving Only Bangladeshi Uid", end="")
     animate_message("...")
-    display_spinner()
+    spinner_thread.join()
     filtered_data = []
     for entry in data:
         if '|' in entry:
@@ -168,8 +169,9 @@ def main():
     clear()
 
     print('[1] Save Only Bagnladeshi Uid')
-    print('[2] Remove Indian Uid')
-    method_choice = input().strip()
+    print('[2] Remove Indian Uid''\n')
+
+    method_choice = input('[?] Your Choice : ').strip()
 
     if method_choice == '1':
         method_1()
