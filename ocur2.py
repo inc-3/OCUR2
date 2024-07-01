@@ -8,7 +8,7 @@ from BD import common_bangladeshi_names
 from keywords import indian_keywords
 
 # COLOURS
-GREEN = "\33[38;5;46m"
+GREEN = "\033[92m"
 WHITE = "\33[1;97m"
 RED = "\33[1;91m"
 BLUE = "\33[1;97m"
