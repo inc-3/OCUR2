@@ -62,11 +62,11 @@ def read_data_from_file(file_path):
 def input_file_path():
     custom_path = input("Would you like to input a custom file path? (y/n): ").strip().lower()
     if custom_path == 'y':
-        os.system("clear")  # Clear the screen after input
+        clear_screen_and_print_logo()
         file_path = input("Enter the path to your file: ").strip()
         return file_path
     else:
-        os.system("clear")  # Clear the screen after input
+        clear_screen_and_print_logo()
         return ['/sdcard/1.txt', '/sdcard/2.txt', '/sdcard/3.txt', '/sdcard/4.txt',
                 '/sdcard/5.txt', '/sdcard/6.txt', '/sdcard/7.txt', '/sdcard/8.txt']
 
@@ -181,7 +181,7 @@ def method_2():
             filtered_data = filter_names(data, indian_keywords)
             sorted_data = sort_data_lexicographically_desc(filtered_data)
             save_data_to_file(sorted_data, file_path)
-            print(f"\rProcessing completed Remaining Uid: {len(filtered_data)}\n")
+            print(f"\rProcessing completed Remaining Uid: {GREEN}{len(filtered_data)}\n")
     
     if not_found_files:
         print("The following files were not found:")
