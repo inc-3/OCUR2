@@ -1,4 +1,3 @@
-#original code write by INCEPTION
 import os
 import sys
 import re
@@ -76,12 +75,10 @@ def save_to_same_file(filtered_data, file_path):
     print(f"Saving filtered data to file: {file_path}")
     try:
         with open(file_path, 'w', encoding='utf-8') as file:
-            for entry in data:
+            for entry in filtered_data:
                 file.write(entry + '\n')
     except IOError:
         print(f"Error saving to file '{file_path}'.")
-
-#M2
 
 def save_data_to_file(data, file_path):
     """Save filtered data to a text file."""
@@ -126,7 +123,6 @@ def sort_data_lexicographically_desc(data):
     """Sort data lexicographically in descending order."""
     print("Sorting data lexicographically in descending order")
     return sorted(data, reverse=True)
-        
 
 def method_1():
     file_paths = input_file_path()
@@ -151,12 +147,12 @@ def method_2():
         if not os.path.exists(file_path):
             print(f"File not found: {file_path}")
             continue
-    data = read_data_from_file(file_path)
-    data = remove_duplicate_lines(data)
-    filtered_data = filter_names(filtered_data, indian_keywords)
-    sorted_data = sort_data_lexicographically_desc(filtered_data)
-    save_data_to_file(sorted_data, file_path)
-    print(f"\rProcessing completed Remaining Uid: {len(filtered_data)}\n")
+        data = read_data_from_file(file_path)
+        data = remove_duplicate_lines(data)
+        filtered_data = filter_names(data, indian_keywords)
+        sorted_data = sort_data_lexicographically_desc(filtered_data)
+        save_data_to_file(sorted_data, file_path)
+        print(f"\rProcessing completed Remaining Uid: {len(filtered_data)}\n")
 
 # Main function
 def main():
