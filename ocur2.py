@@ -3,6 +3,7 @@ import os
 import sys
 import re
 from bs4 import BeautifulSoup
+from BD import common_bangladeshi_names
 
 # COLOURS
 GREEN = "\33[38;5;46m"
@@ -74,50 +75,51 @@ def save_to_same_file(filtered_data, file_path):
         for entry in filtered_data:
             file.write(entry + '\n')
 
-def save_entries_to_file(entries, file_path):
-    """Save filtered entries to a text file."""
-    print(f"Saving filtered entries to file: {file_path}")
+#M2
+
+def save_data_to_file(data, file_path):
+    """Save filtered data to a text file."""
+    print(f"Saving filtered data to file: {file_path}")
     try:
         with open(file_path, 'w', encoding='utf-8') as file:
-            for entry in entries:
+            for entry in data:
                 file.write(entry + '\n')
     except IOError:
         print(f"Error saving to file '{file_path}'.")
 
 def contains_arabic(text):
-    """Check if the text contains Arabic characters."""
     arabic_re = re.compile(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]')
     return bool(arabic_re.search(text))
 
-def remove_duplicates_by_uid(entries):
+def remove_duplicates_by_uid(data):
     """Remove duplicates based on the UID."""
     print("Removing duplicates based on UID...")
     seen_uids = set()
-    filtered_entries = []
-    for entry in entries:
+    filtered_data = []
+    for entry in data:
         uid = entry.split('|', 1)[0]
         if uid not in seen_uids:
             seen_uids.add(uid)
-            filtered_entries.append(entry)
-    return filtered_entries
+            filtered_data.append(entry)
+    return filtered_data
 
-def filter_names(entries, indian_keywords):
-    """Filter out entries with Indian or Arabic names based on keywords and Arabic characters."""
+def filter_names(data, indian_keywords):
+    """Filter out data with Indian or Arabic names based on keywords and Arabic characters."""
     print("Filtering Out Others Country Uid...")
-    filtered_entries = []
-    for entry in entries:
+    filtered_data = []
+    for entry in data:
         uid, name = entry.split('|', 1)
         
         # Check if any part contains Indian keywords or Arabic characters
         if not any(any(keyword in part for keyword in indian_keywords) or contains_arabic(part) for part in name.strip().split()):
-            filtered_entries.append(entry)
+            filtered_data.append(entry)
     
-    return filtered_entries
+    return filtered_data
 
-def sort_entries_lexicographically_desc(entries):
-    """Sort entries lexicographically in descending order."""
-    print("Sorting entries lexicographically in descending order")
-    return sorted(entries, reverse=True)
+def sort_data_lexicographically_desc(data):
+    """Sort data lexicographically in descending order."""
+    print("Sorting data lexicographically in descending order")
+    return sorted(data, reverse=True)
         
 
 def method_1():
@@ -143,11 +145,12 @@ def method_2():
         if not os.path.exists(file_path):
             print(f"File not found: {file_path}")
             continue
-    filtered_entries = remove_duplicates_by_uid(entries)
-    filtered_entries = filter_names(filtered_entries, indian_keywords)
-    sorted_entries = sort_entries_lexicographically_desc(filtered_entries)
-    save_entries_to_file(sorted_entries, file_path)
-    print(f"\rProcessing completed Remaining Uid: {len(filtered_entries)}\n")
+    data = read_data_from_file(file_path)
+    data = remove_duplicate_lines(data)
+    filtered_data = filter_names(filtered_data, indian_keywords)
+    sorted_data = sort_data_lexicographically_desc(filtered_data)
+    save_data_to_file(sorted_data, file_path)
+    print(f"\rProcessing completed Remaining Uid: {len(filtered_data)}\n")
 
 # Main function
 def main():
