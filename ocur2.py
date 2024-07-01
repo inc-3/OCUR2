@@ -143,9 +143,9 @@ def method_1():
         data = remove_duplicate_lines(data)
         filtered_data = filter_bangladeshi_names(data)
         filtered_data = sort_lexicographically_descending(filtered_data)
-        save_data_to_file(sorted_data, file_path)
+        save_data_to_file(filtered_data, file_path)
         print(f"\rProcessing completed Remaining Uid: {len(filtered_data)}\n")
-        
+
 def method_2():
     file_paths = input_file_path()
     if isinstance(file_paths, str):  # If a single custom file path is provided
