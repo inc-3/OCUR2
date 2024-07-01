@@ -29,6 +29,7 @@ logo = f"""
 {WHITE}[\33[1;91m~{WHITE}] FEATURE   {WHITE} : {WHITE} OUT C UID RMVR
 {line}
 """
+
 # Function to simulate an animation
 def animate_message(message, delay=0.5, animation_length=3):
     sys.stdout.write(message)
@@ -134,38 +135,62 @@ def method_1():
     file_paths = input_file_path()
     if isinstance(file_paths, str):  # If a single custom file path is provided
         file_paths = [file_paths]
+    
+    not_found_files = []
+    
     for file_path in file_paths:
         if not os.path.exists(file_path):
-            print(f"File not found: {file_path}")
-            continue
-        data = read_data_from_file(file_path)
-        data = remove_duplicates_by_uid(data)
-        filtered_data = filter_bangladeshi_names(data)
-        filtered_data = sort_lexicographically_descending(filtered_data)
-        save_data_to_file(filtered_data, file_path)
-        print(f"\rProcessing completed Remaining Uid: {len(filtered_data)}\n")
+            not_found_files.append(file_path)
+        else:
+            data = read_data_from_file(file_path)
+            data = remove_duplicates_by_uid(data)
+            filtered_data = filter_bangladeshi_names(data)
+            filtered_data = sort_lexicographically_descending(filtered_data)
+            save_data_to_file(filtered_data, file_path)
+            print(f"\rProcessing completed Remaining Uid: {len(filtered_data)}\n")
+    
+    if not_found_files:
+        print("The following files were not found:")
+        for file_path in not_found_files:
+            print(file_path)
+        return_to_menu = input("Do you want to return to the main menu? (y/n): ").strip().lower()
+        if return_to_menu != 'y':
+            sys.exit(0)  # Exit the program
 
 def method_2():
     file_paths = input_file_path()
     if isinstance(file_paths, str):  # If a single custom file path is provided
         file_paths = [file_paths]
+    
+    not_found_files = []
+    
     for file_path in file_paths:
         if not os.path.exists(file_path):
-            print(f"File not found: {file_path}")
-            continue
-        data = read_data_from_file(file_path)
-        data = remove_duplicates_by_uid(data)
-        filtered_data = filter_names(data, indian_keywords)
-        sorted_data = sort_data_lexicographically_desc(filtered_data)
-        save_data_to_file(sorted_data, file_path)
-        print(f"\rProcessing completed Remaining Uid: {len(filtered_data)}\n")
+            not_found_files.append(file_path)
+        else:
+            data = read_data_from_file(file_path)
+            data = remove_duplicates_by_uid(data)
+            filtered_data = filter_names(data, indian_keywords)
+            sorted_data = sort_data_lexicographically_desc(filtered_data)
+            save_data_to_file(sorted_data, file_path)
+            print(f"\rProcessing completed Remaining Uid: {len(filtered_data)}\n")
+    
+    if not_found_files:
+        print("The following files were not found:")
+        for file_path in not_found_files:
+            print(file_path)
+        return_to_menu = input("Do you want to return to the main menu? (y/n): ").strip().lower()
+        if return_to_menu != 'y':
+            sys.exit(0)  # Exit the program
 
 def main():
     sys.stdout.write('\x1b]2; INCEPTION \x07')
     line = f"{WHITE}━" * 40
     X = f"{WHITE}[\33[1;91m~{WHITE}]"
+    
     def linex(): 
         print(line)
+    
     def clear(): 
         os.system("clear")  # Clear the screen
         print(logo)  # Print your logo after clearing
@@ -182,14 +207,12 @@ def main():
         if method_choice == '1':
             clear_above_lines(4)
             method_1()
-              # Clear the screen after method_1 is executed
         elif method_choice == '2':
             clear_above_lines(4)  # Clear menu options, prompt, and input line
             method_2()
         else:
-             exit
+            break
 
-        
 def clear_above_lines(n):
     # ANSI escape code: move cursor up 'n' lines and clear each line
     for _ in range(n):
