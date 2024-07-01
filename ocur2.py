@@ -3,6 +3,7 @@ import os
 import sys
 import re
 from bs4 import BeautifulSoup
+from BD import common_bangladeshi_names
 from keywords import indian_keywords
 
 # COLOURS
@@ -71,9 +72,14 @@ def sort_lexicographically_descending(data):
 
 # Function to save filtered data to the same file
 def save_to_same_file(filtered_data, file_path):
-    with open(file_path, 'w') as file:
-        for entry in filtered_data:
-            file.write(entry + '\n')
+    """Save filtered data to a text file."""
+    print(f"Saving filtered data to file: {file_path}")
+    try:
+        with open(file_path, 'w', encoding='utf-8') as file:
+            for entry in data:
+                file.write(entry + '\n')
+    except IOError:
+        print(f"Error saving to file '{file_path}'.")
 
 #M2
 
