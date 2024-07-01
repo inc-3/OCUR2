@@ -8,7 +8,9 @@ from BD import common_bangladeshi_names
 from keywords import indian_keywords
 
 # COLOURS
-GREEN = "\033[92m"
+GREEN = "\33[38;5;46m"
+green_text = "\033[92m"
+reset_text = "\033[0m"
 WHITE = "\33[1;97m"
 RED = "\33[1;91m"
 BLUE = "\33[1;97m"
@@ -155,8 +157,7 @@ def method_1():
             filtered_data = filter_bangladeshi_names(data)
             filtered_data = sort_lexicographically_descending(filtered_data)
             save_data_to_file(filtered_data, file_path)
-            print(f"\rProcessing completed Remaining Uid: {len(filtered_data)}\n")
-    
+            print(f"\rProcessing completed Remaining Uid: {green_text}{len(filtered_data)}{reset_text}\n")
     if not_found_files:
         print("The following files were not found:")
         for file_path in not_found_files:
