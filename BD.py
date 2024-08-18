@@ -33,6 +33,7 @@ common_bangladeshi_names = {
     "Alifa", "Afifa", "Afsana", "Tithi", "Tumpa", "Sarika", "Munia", "Samira",
     "Moriom", "Tanjina", "Shukria", "Rifa", "Rabeya", "Tahmina", "Jahanara", "Ayesha", "Fatima",
     "Mariam", "Nasrin", "Sabina", "Taslima", "Farzana", "Sharmin", "Rehana", "Suraiya", "Shahnaz",
-    "Shahana", "Nusrat", "Sumaiya", "Shabnam", "Md", "Jannat", "Nusrat", "Jahan", "Sex", "Ewr"
+    "Shahana", "Nusrat", "Sumaiya", "Shabnam", "Md", "Jannat", "Nusrat", "Jahan", "Ewr", "Uddin", "Adiba", "Meghla", "Keya", "Masud", "Mahim", "Shofik", 
+    "Mustakim", "Nargis", "kolpona", "Resma", "Tisha", "Jisan", "Harun", "Jibon", "Mahim"
     # Add more common names as needed
 }
