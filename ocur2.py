@@ -140,7 +140,7 @@ def remove_md_from_name(data):
     for entry in data:
         number, name = entry.split('|', 1)
         name_parts = name.split()
-        if name_parts[0] == "Md" "Mst":
+        if name_parts[0] in ["Md", "Md.", "Mst"]:
             name = " ".join(name_parts[1:])
         updated_data.append(f"{number}|{name}")
     return updated_data
