@@ -135,6 +135,17 @@ def filter_names(data, indian_keywords):
 def sort_data_lexicographically_desc(data):
     return sorted(data, reverse=True)
 
+def remove_md_from_name(data):
+    updated_data = []
+    for entry in data:
+        number, name = entry.split('|', 1)
+        name_parts = name.split()
+        if name_parts[0] == "Md":
+            name = " ".join(name_parts[1:])  # Remove 'Md' if it's the first name
+        updated_data.append(f"{number}|{name}")
+    return updated_data
+
+
 def clear_screen_and_print_logo():
     os.system("clear")  # Clear the screen
     print(logo)         # Print the logo
@@ -190,12 +201,39 @@ def method_2():
         input("Press Enter to go back to the main menu...")
         main()  # Go back to the main menu
 
+def dup():
+    clear_screen_and_print_logo()
+    file_paths = input_file_path()
+    if isinstance(file_paths, str):  # If a single custom file path is provided
+        file_paths = [file_paths]
+    
+    not_found_files = []
+    
+    for file_path in file_paths:
+        if not os.path.exists(file_path):
+            not_found_files.append(file_path)
+        else:
+            data = read_data_from_file(file_path)
+            data = remove_duplicates_by_uid(data)
+            data = remove_md_from_name(data)
+            save_data_to_file(data, file_path)
+            print(f"\rProcessing completed Remaining Uid: {GREEN}{len(data)}{reset_text}\n")
+
+    if not_found_files:
+        print("The following files were not found:")
+        for file_path in not_found_files:
+            print(file_path)
+        input("Press Enter to go back to the main menu...")
+        main()  # Go back to the main menu    
+
+
 def main():
     sys.stdout.write('\x1b]2; INCEPTION \x07')
     clear_screen_and_print_logo()
 
     print('[1] Save Only Bangladeshi Uid')
-    print('[2] Remove Indian Uid\n')
+    print('[2] Remove Indian Uid')
+    print('[3] Remove Duplicate Uid\n')
 
     method_choice = input('[?] Your Choice : ').strip()
 
@@ -203,6 +241,8 @@ def main():
         method_1()
     elif method_choice == '2':
         method_2()
+    elif method_choice == '3':
+        dup()    
     else:
         print("Invalid choice. Please choose 1 or 2.")
 
