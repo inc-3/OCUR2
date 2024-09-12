@@ -138,11 +138,15 @@ def sort_data_lexicographically_desc(data):
 def rm(data):
     updated_data = []
     for entry in data:
-        number, name = entry.split('|', 1)
-        name_parts = name.split()
-        if name_parts[0] in ["Md", "Mst"]:
-            name = " ".join(name_parts[1:])  # Remove 'Md' or 'Mst' if it's the first name
-        updated_data.append(f"{number}|{name}")
+        if '|' in entry:  # Check if the entry contains the expected delimiter
+            number, name = entry.split('|', 1)
+            name_parts = name.split()
+            if len(name_parts) > 0 and name_parts[0] in ["Md", "Mst"]:
+                name = " ".join(name_parts[1:])  # Remove 'Md' or 'Mst' if it's the first name
+            updated_data.append(f"{number}|{name}")
+        else:
+            print(f"Ignoring entry: {entry} (Does not contain expected format)")
+            updated_data.append(entry)  # Keep the entry as is if it's not in the expected format
     return updated_data
 
 
