@@ -135,13 +135,13 @@ def filter_names(data, indian_keywords):
 def sort_data_lexicographically_desc(data):
     return sorted(data, reverse=True)
 
-def remove_md_from_name(data):
+def rm(data):
     updated_data = []
     for entry in data:
         number, name = entry.split('|', 1)
         name_parts = name.split()
-        if name_parts[0] in ["Md", "Md.", "Mst"]:
-            name = " ".join(name_parts[1:])
+        if name_parts[0] in ["Md", "Mst"]:
+            name = " ".join(name_parts[1:])  # Remove 'Md' or 'Mst' if it's the first name
         updated_data.append(f"{number}|{name}")
     return updated_data
 
@@ -215,7 +215,7 @@ def dup():
         else:
             data = read_data_from_file(file_path)
             data = remove_duplicates_by_uid(data)
-            data = remove_md_from_name(data)
+            data = rm(data)
             save_data_to_file(data, file_path)
             print(f"\rProcessing completed Remaining Uid: {GREEN}{len(data)}{reset_text}\n")
 
