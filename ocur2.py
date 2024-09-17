@@ -165,7 +165,7 @@ def rm(data):
         if '|' in entry:  # Check if the entry contains the expected delimiter
             number, name = entry.split('|', 1)
             name_parts = name.split()
-            if len(name_parts) > 0 and name_parts[0] in ["Md",  "MD", "Sk", "Md.",  "Mst"]:
+            if len(name_parts) > 0 and name_parts[0] in ["Md", "MD", "Sk", "Md.", "Mst"]:
                 name = " ".join(name_parts[1:])  # Remove 'Md' or 'Mst' if it's the first name
             updated_data.append(f"{number}|{name}")
         else:
