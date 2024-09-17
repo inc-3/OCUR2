@@ -119,5 +119,5 @@ bdn = {
     "Jannat", "Shirin", "Rumpa", "Nahar", "Soma", "Tuli", "Anis", "Rezina", "Shirin", "Jolly", 
     "Shila", "Rozina", "Mim", "Soma", "Rafia", "Shirin", "Sadia", "Maliha", "Farzana", 
     "Tania", "Shirin", "Sumi", "Mursheda", "Nipa", "Shirin", "Farida", "Feroza", "Shirin", "Islam",
-    "Akhtar", "Akter", "Akhter", "Aktar"
+    "Akhtar", "Akter", "Akhter", "Aktar", "Khadija",
 }
