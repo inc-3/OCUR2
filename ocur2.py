@@ -321,7 +321,7 @@ def main():
         dup()
     elif method_choice == '4':
         chk()
-    elif method_choice == '4':
+    elif method_choice == '5':
         method_5()    
     else:
         print("Invalid choice. Please choose 1 or 2.")
