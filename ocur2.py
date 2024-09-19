@@ -190,7 +190,7 @@ def method_1():
             not_found_files.append(file_path)
         else:
             data = read_data_from_file(file_path)
-            data = remove_duplicates_by_uid(data)
+            #data = remove_duplicates_by_uid(data)
             filtered_data = filter_bangladeshi_names(data)
             filtered_data = sort_lexicographically_descending(filtered_data)
             save_data_to_file(filtered_data, file_path)
