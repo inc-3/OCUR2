@@ -1,4 +1,4 @@
 bdn = {
     # Male names
-    "Md", "Md.",
+    "Md", "Md."
 }
