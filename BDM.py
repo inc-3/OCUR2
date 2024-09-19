@@ -38,5 +38,5 @@ bdn = {
     "Akash", "Tarik", "Shuvo", "Arshad", "Bashar", "Junaid", "Khaled", "Mahin", "Nadir", "Wasim", 
     "Zubair", "Nazrul", "Rashedul", "Zakir", "Aftab", "Anwarul", "Asad", "Fazle", "Khorshed", 
     "Lokman", "Ishraq", "Touhidur", "Hassanuzzaman", "Nusratullah", "Tayef", "Tawfiq", "Zahedul", 
-    "Shojib", "Abdulahi", "Shawkat", "Sadat", "Zahidur", "Hossainul", "Adnan", "Tarek", "Saeed",
+    "Shojib", "Abdulahi", "Shawkat", "Sadat", "Zahidur", "Hossainul", "Adnan", "Tarek", "Saeed"
 }
