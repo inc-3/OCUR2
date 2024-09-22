@@ -177,24 +177,25 @@ def clear_screen_and_print_logo():
     os.system("clear")  # Clear the screen
     print(logo)         # Print the logo
 
-def method_1():
+def method_5():
     clear_screen_and_print_logo()
     file_paths = input_file_path()
+    
     if isinstance(file_paths, str):  # If a single custom file path is provided
         file_paths = [file_paths]
-    
+
     not_found_files = []
-    
+
     for file_path in file_paths:
         if not os.path.exists(file_path):
             not_found_files.append(file_path)
         else:
             data = read_data_from_file(file_path)
-            data = remove_duplicates_by_uid(data)
-            filtered_data = filter_bangladeshi_names(data)
-            filtered_data = sort_lexicographically_descending(filtered_data)
-            save_data_to_file(filtered_data, file_path)
-            print(f"\rProcessing completed Remaining Uid: {GREEN}{len(filtered_data)}{reset_text}\n")
+            # Filter lines containing 'Md', 'MD', or 'Md.'
+            md_lines = [line for line in data if any(prefix in line for prefix in ['Md', 'MD', 'Md.'])]
+            save_data_to_file(md_lines, file_path)
+            print(f"\rProcessing completed. Remaining Uid: {GREEN}{len(md_lines)}{reset_text}\n")
+    
     if not_found_files:
         print("The following files were not found:")
         for file_path in not_found_files:
