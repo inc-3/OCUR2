@@ -180,29 +180,27 @@ def clear_screen_and_print_logo():
 def method_1():
     clear_screen_and_print_logo()
     file_paths = input_file_path()
-    
     if isinstance(file_paths, str):  # If a single custom file path is provided
         file_paths = [file_paths]
-
+    
     not_found_files = []
-
+    
     for file_path in file_paths:
         if not os.path.exists(file_path):
             not_found_files.append(file_path)
         else:
             data = read_data_from_file(file_path)
             data = remove_duplicates_by_uid(data)
-            filtered_data = filter_bangladeshi_names(data, bdn)
-            sorted_data = sort_data_lexicographically_desc(filtered_data)
-            save_data_to_file(sorted_data, file_path)
+            filtered_data = filter_bangladeshi_names(data)
+            filtered_data = sort_lexicographically_descending(filtered_data)
+            save_data_to_file(filtered_data, file_path)
             print(f"\rProcessing completed Remaining Uid: {GREEN}{len(filtered_data)}{reset_text}\n")
-    
     if not_found_files:
         print("The following files were not found:")
         for file_path in not_found_files:
             print(file_path)
         input("Press Enter to go back to the main menu...")
-        main()  # Go back to the main menu
+        main()
 
 def method_2():
     clear_screen_and_print_logo()
