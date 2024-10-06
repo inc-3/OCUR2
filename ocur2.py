@@ -4,7 +4,7 @@ import threading
 import time
 import re
 from bs4 import BeautifulSoup
-from BD import bdn
+from BDM import bdn
 from IN import inn
 
 # COLOURS
