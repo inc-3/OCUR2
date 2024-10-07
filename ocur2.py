@@ -299,7 +299,31 @@ def method_5():
         input("Press Enter to go back to the main menu...")
         main()  # Go back to the main menu
             
-           
+def method_6():
+    clear_screen_and_print_logo()
+    file_paths = input_file_pats()
+    
+    if isinstance(file_paths, str):  # If a single custom file path is provided
+        file_paths = [file_paths]
+
+    not_found_files = []
+
+    for file_path in file_paths:
+        if not os.path.exists(file_path):
+            not_found_files.append(file_path)
+        else:
+            data = read_data_from_file(file_path)        
+            sorted_data = sort_data_lexicographically_desc(data)
+            save_data_to_file(sorted_data, file_path)
+            print(f"\rProcessing completed. Remaining Uid: {GREEN}{len(sorted_data)}{reset_text}\n")
+    
+    if not_found_files:
+        print("The following files were not found:")
+        for file_path in not_found_files:
+            print(file_path)
+        input("Press Enter to go back to the main menu...")
+        main()
+                       
 
 def main():
     sys.stdout.write('\x1b]2; INCEPTION \x07')
@@ -321,7 +345,9 @@ def main():
     elif method_choice == '4':
         chk()
     elif method_choice == '5':
-        method_5()    
+        method_5()
+    elif method_choice == '6':
+        method_6()            
     else:
         print("Invalid choice. Please choose 1 or 2.")
 
