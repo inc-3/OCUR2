@@ -301,7 +301,7 @@ def method_5():
             
 def method_6():
     clear_screen_and_print_logo()
-    file_paths = input_file_pats()
+    file_paths = input_file_path()
     
     if isinstance(file_paths, str):  # If a single custom file path is provided
         file_paths = [file_paths]
