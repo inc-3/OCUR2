@@ -333,6 +333,8 @@ def main():
     print('[2] Remove Indian Uid')
     print('[3] Remove Duplicate Uid')
     print('[4] Remove Bangladeshi uid\n')
+    print('[5] Remove MD from file\n')
+    print('[6] Short uid lexicographically \n')
 
     method_choice = input('[?] Your Choice : ').strip()
 
@@ -349,7 +351,7 @@ def main():
     elif method_choice == '6':
         method_6()            
     else:
-        print("Invalid choice. Please choose 1 or 2.")
+        print("Invalid choice")
 
 if __name__ == "__main__":
     main()
