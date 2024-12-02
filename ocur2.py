@@ -72,8 +72,8 @@ def input_file_path():
                 '/sdcard/5.txt', '/sdcard/6.txt', '/sdcard/7.txt', '/sdcard/8.txt']
 
 def is_bangladeshi(name):
-    #bengali_pattern = re.compile("[\u0980-\u09FF]")
-    #return bool(bengali_pattern.search(name)) or any(common_name in name for common_name in bdn)
+    bengali_pattern = re.compile("[\u0980-\u09FF]")
+    return bool(bengali_pattern.search(name)) or any(common_name in name for common_name in bdn)
     return any(common_name in name for common_name in bdn)
 
 # Function to filter out non-Bangladeshi names
