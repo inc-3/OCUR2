@@ -242,7 +242,6 @@ def dup():
         else:
             data = read_data_from_file(file_path)
             data = remove_duplicates_by_uid(data)
-            data = rm(data)
             save_data_to_file(data, file_path)
             print(f"\rProcessing completed Remaining Uid: {GREEN}{len(data)}{reset_text}\n")
 
