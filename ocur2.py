@@ -321,8 +321,39 @@ def method_6():
         for file_path in not_found_files:
             print(file_path)
         input("Press Enter to go back to the main menu...")
-        main()
-                       
+        main()                       
+
+def method_7():
+    clear_screen_and_print_logo()
+    file_paths = input_file_path()
+    if isinstance(file_paths, str):
+        file_paths = [file_paths]
+    not_found_files = []
+    for file_path in file_paths:
+        if not os.path.exists(file_path):
+            not_found_files.append(file_path)
+        else:
+            data = read_data_from_file(file_path)
+            data = remove_duplicates_by_uid(data)
+            # Filter lines where names contain Bengali characters
+            bangla_lines = [line for line in data if '|' in line and contains_bangla(line.split('|', 1)[1])]
+            data = remove_duplicates_by_uid(bangla_lines)
+            sorted_data = sort_data_lexicographically_desc(data)
+            save_data_to_file(sorted_data, file_path)
+            print(f"\rProcessing completed. Remaining Uid: {GREEN}{len(bangla_lines)}{reset_text}\n")
+    
+    if not_found_files:
+        print("The following files were not found:")
+        for file_path in not_found_files:
+            print(file_path)
+        input("Press Enter to go back to the main menu...")
+        main()  # Go back to the main menu
+
+
+def contains_bangla(text):
+    """Check if the text contains Bengali characters."""
+    bengali_re = re.compile(r'[\u0980-\u09FF]')
+    return bool(bengali_re.search(text))
 
 def main():
     sys.stdout.write('\x1b]2; INCEPTION \x07')
@@ -349,6 +380,8 @@ def main():
         method_5()
     elif method_choice == '6':
         method_6()            
+    elif method_choice == '7':
+        method_7() 
     else:
         print("Invalid choice")
 
