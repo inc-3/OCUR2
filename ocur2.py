@@ -354,6 +354,54 @@ def contains_bangla(text):
     """Check if the text contains Bengali characters."""
     bengali_re = re.compile(r'[\u0980-\u09FF]')
     return bool(bengali_re.search(text))
+    
+    
+def method_8():
+    clear_screen_and_print_logo()
+    print("[*] Combine Multiple Files into One")
+    
+    try:
+        # Ask for the number of files to combine
+        num_files = int(input("How many files do you want to combine? ").strip())
+        if num_files < 1:
+            print("Invalid number of files. Returning to the main menu.")
+            return
+        
+        # Ask for the main file path
+        main_file_path = input("Enter the path for the main file: ").strip()
+        if not os.path.exists(main_file_path):
+            print(f"Main file '{main_file_path}' does not exist. Returning to the main menu.")
+            return
+        
+        # Read all input file paths
+        input_file_paths = []
+        for i in range(num_files):
+            file_path = input(f"Enter the path for input file {i + 1}: ").strip()
+            if os.path.exists(file_path):
+                input_file_paths.append(file_path)
+            else:
+                print(f"Input file '{file_path}' does not exist. Skipping this file.")
+        
+        if not input_file_paths:
+            print("No valid input files provided. Returning to the main menu.")
+            return
+        
+        # Combine the contents of all input files into the main file
+        with open(main_file_path, 'a', encoding='utf-8') as main_file:
+            for file_path in input_file_paths:
+                with open(file_path, 'r', encoding='utf-8') as input_file:
+                    main_file.write(input_file.read() + '\n')  # Add a newline for separation
+                print(f"Contents of '{file_path}' added to the main file.")
+        
+        print(f"[*] Successfully combined {len(input_file_paths)} files into '{main_file_path}'.")
+    
+    except ValueError:
+        print("Invalid input. Please enter a valid number. Returning to the main menu.")
+    except Exception as e:
+        print(f"An error occurred: {e}. Returning to the main menu.")
+    finally:
+        input("Press Enter to go back to the main menu...")
+        main()  # Go back to the main menu
 
 def main():
     sys.stdout.write('\x1b]2; INCEPTION \x07')
@@ -381,7 +429,9 @@ def main():
     elif method_choice == '6':
         method_6()            
     elif method_choice == '7':
-        method_7() 
+        method_7()
+    elif method_choice == '8':
+        method_8()    
     else:
         print("Invalid choice")
 
