@@ -74,7 +74,7 @@ def input_file_path():
 def is_bangladeshi(name):
     bengali_pattern = re.compile("[\u0980-\u09FF]")
     return any(common_name in name for common_name in bdn)
-    return bool(bengali_pattern.search(name)) or any(common_name in name for common_name in bdn)
+    ##return bool(bengali_pattern.search(name)) or any(common_name in name for common_name in bdn)
     
 
 # Function to filter out non-Bangladeshi names
