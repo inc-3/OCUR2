@@ -155,7 +155,7 @@ def filter_non_bangladeshi_names(data):
     for entry in data:
         if '|' in entry:
             number, name = entry.split('|', 1)  # Split only at the first occurrence of '|'
-            if not is_bangladeshi(name):  # Keep if the name is NOT Bangladeshi
+            if not chk(name):  # Keep if the name is NOT Bangladeshi
                 filtered_data.append(entry)
         else:
             print(f"Ignoring line: {entry} (Does not contain expected format)")
@@ -274,10 +274,17 @@ def chk():
         else:
             data = read_data_from_file(file_path)
             data = remove_duplicates_by_uid(data)
-            filter_non_bangladeshi_names = filter_non_bangladeshi_names(data, bdn)
-            sorted_data = sort_data_lexicographically_desc(filter_non_bangladeshi_names)
+            filtered_data = filter_non_bangladeshi_names(data, chk)
+            sorted_data = sort_data_lexicographically_desc(filtered_data)
             save_data_to_file(sorted_data, file_path)
             print(f"\rProcessing completed Remaining Uid: {GREEN}{len(filtered_data)}{reset_text}\n")
+    
+    if not_found_files:
+        print("The following files were not found:")
+        for file_path in not_found_files:
+            print(file_path)
+        input("Press Enter to go back to the main menu...")
+        main()  # Go back to the main menu
 
             
 def method_5():
