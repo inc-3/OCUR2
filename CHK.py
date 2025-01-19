@@ -1,4 +1,4 @@
-chk = {
+chak = {
     # Male names
     "Abdul", "Amin", "Anis", "Asif", "Aziz", "Bashir", "Bilal",
     "Faisal", "Farhan", "Habib", "Hassan", "Hossain", "Imran", "Iqbal", "Jamil", "Kamal", "Karim", 
