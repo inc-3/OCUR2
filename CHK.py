@@ -1,1 +1,1 @@
-chak = {"Chakma", "Marma", "Chk", "Tripura", "Sangma",}
+chak = { "Chakma", "Marma", "Chk", "Tripura", "Sangma" }
