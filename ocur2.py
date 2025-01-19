@@ -72,11 +72,18 @@ def input_file_path():
         return ['/sdcard/1.txt', '/sdcard/2.txt', '/sdcard/3.txt', '/sdcard/4.txt',
                 '/sdcard/5.txt', '/sdcard/6.txt', '/sdcard/7.txt', '/sdcard/8.txt']
 
+def chk(name):
+    bengali_pattern = re.compile("[\u0980-\u09FF]")
+    return any(common_name in name for common_name in chk)
+
 def is_bangladeshi(name):
     bengali_pattern = re.compile("[\u0980-\u09FF]")
     return any(common_name in name for common_name in bdn)
-    ##return bool(bengali_pattern.search(name)) or any(common_name in name for common_name in bdn)
-    
+    #return bool(bengali_pattern.search(name)) or any(common_name in name for common_name in bdn)
+
+
+ 
+
 
 # Function to filter out non-Bangladeshi names
 def filter_bangladeshi_names(data):
@@ -139,21 +146,20 @@ def filter_names(data, inn):
     return filtered_data
     
     
-def rm_bd(data, chk):
-    print("Removing Bangladeshi Uid...")
-    fdata = []
-    
+def filter_non_bangladeshi_names(data):
+    print("Removing Bangladeshi Uid", end="")
+    animate_message("...")
+    display_spinner()
+    print(" Done!")
+    filtered_data = []
     for entry in data:
         if '|' in entry:
-            uid, name = entry.split('|', 1)
-            
-            # If the name is NOT a common Bangladeshi name, keep it
-            if not any(common_name in name for common_name in chk):
-                fdata.append(entry)
+            number, name = entry.split('|', 1)  # Split only at the first occurrence of '|'
+            if not is_bangladeshi(name):  # Keep if the name is NOT Bangladeshi
+                filtered_data.append(entry)
         else:
             print(f"Ignoring line: {entry} (Does not contain expected format)")
-    
-    return fdata
+    return filtered_data
 
 
 
@@ -268,8 +274,8 @@ def chk():
         else:
             data = read_data_from_file(file_path)
             data = remove_duplicates_by_uid(data)
-            fdata = rm_bd(data, chk)
-            sorted_data = sort_data_lexicographically_desc(fdata)
+            filter_non_bangladeshi_names = rm_bd(data, chk)
+            sorted_data = sort_data_lexicographically_desc(filter_non_bangladeshi_names)
             save_data_to_file(sorted_data, file_path)
             print(f"\rProcessing completed Remaining Uid: {GREEN}{len(filtered_data)}{reset_text}\n")
 
