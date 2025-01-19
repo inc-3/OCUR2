@@ -72,7 +72,7 @@ def input_file_path():
         return ['/sdcard/1.txt', '/sdcard/2.txt', '/sdcard/3.txt', '/sdcard/4.txt',
                 '/sdcard/5.txt', '/sdcard/6.txt', '/sdcard/7.txt', '/sdcard/8.txt']
 
-def is_bangladeshi1(name):
+def is_chakma(name):
     return any(common_name in name for common_name in chak)
 
 def is_bangladeshi(name):
@@ -87,6 +87,21 @@ def is_bangladeshi(name):
 # Function to filter out non-Bangladeshi names
 def filter_bangladeshi_names(data):
     print("Saving Only Bangladeshi Uid", end="")
+    animate_message("...")
+    display_spinner()
+    print(" Done!")
+    filtered_data = []
+    for entry in data:
+        if '|' in entry:
+            number, name = entry.split('|', 1)  # Split only at the first occurrence of '|'
+            if is_bangladeshi(name):
+                filtered_data.append(entry)
+        else:
+            print(f"Ignoring line: {entry} (Does not contain expected format)")
+    return filtered_data
+
+def filter_chakma(data):
+    print("Saving Only Chakma Uid", end="")
     animate_message("...")
     display_spinner()
     print(" Done!")
@@ -142,22 +157,6 @@ def filter_names(data, inn):
         if not any(any(keyword in part for keyword in inn) or contains_arabic(part) or contains_hindi(part) for part in name.strip().split()):
             filtered_data.append(entry)
     
-    return filtered_data
-
-
-def filter_non_bangladeshi_names(data):
-    print("Removing Bangladeshi Uid", end="")
-    animate_message("...")
-    display_spinner()
-    print(" Done!")
-    filtered_data = []
-    for entry in data:
-        if '|' in entry:
-            number, name = entry.split('|', 1)  # Split only at the first occurrence of '|'
-            if not is_bangladeshi1(name):  # Keep if the name is NOT Bangladeshi
-                filtered_data.append(entry)
-        else:
-            print(f"Ignoring line: {entry} (Does not contain expected format)")
     return filtered_data
 
 
@@ -420,29 +419,27 @@ def method_8():
 def method_9():
     clear_screen_and_print_logo()
     file_paths = input_file_path()
-    
     if isinstance(file_paths, str):  # If a single custom file path is provided
         file_paths = [file_paths]
-
+    
     not_found_files = []
-
+    
     for file_path in file_paths:
         if not os.path.exists(file_path):
             not_found_files.append(file_path)
         else:
             data = read_data_from_file(file_path)
-            # Filter lines containing 'Md', 'MD', or 'Md.'
-            chakma_lines = [line for line in data if any(prefix in line for prefix in ["Chakma", "Marma.", "MD", "Sk"])]
-            save_data_to_file(chakma_lines, file_path)
-            print(f"\rProcessing completed. Remaining Uid: {GREEN}{len(md_lines)}{reset_text}\n")
-    
+            data = remove_duplicates_by_uid(data)
+            filtered_data = filter_chakma(data)
+            filtered_data = sort_lexicographically_descending(filtered_data)
+            save_data_to_file(filtered_data, file_path)
+            print(f"\rProcessing completed Remaining Uid: {GREEN}{len(filtered_data)}{reset_text}\n")
     if not_found_files:
         print("The following files were not found:")
         for file_path in not_found_files:
             print(file_path)
         input("Press Enter to go back to the main menu...")
-        main()  # Go back to the main menu
-            
+        main()
 
 def main():
     sys.stdout.write('\x1b]2; INCEPTION \x07')
@@ -472,7 +469,9 @@ def main():
     elif method_choice == '7':
         method_7()
     elif method_choice == '8':
-        method_8()    
+        method_8()
+    elif method_choice == '9':
+        method_9()   
     else:
         print("Invalid choice")
         main()
