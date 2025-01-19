@@ -144,8 +144,8 @@ def filter_names(data, inn):
             filtered_data.append(entry)
     
     return filtered_data
-    
-    
+
+
 def filter_non_bangladeshi_names(data):
     print("Removing Bangladeshi Uid", end="")
     animate_message("...")
@@ -274,7 +274,7 @@ def chk():
         else:
             data = read_data_from_file(file_path)
             data = remove_duplicates_by_uid(data)
-            filter_non_bangladeshi_names = rm_bd(data, chk)
+            filter_non_bangladeshi_names = filter_non_bangladeshi_names(data, bdn)
             sorted_data = sort_data_lexicographically_desc(filter_non_bangladeshi_names)
             save_data_to_file(sorted_data, file_path)
             print(f"\rProcessing completed Remaining Uid: {GREEN}{len(filtered_data)}{reset_text}\n")
@@ -431,7 +431,7 @@ def main():
     elif method_choice == '3':
         dup()
     elif method_choice == '4':
-        filter_non_bangladeshi_names()
+        chk()
     elif method_choice == '5':
         method_5()
     elif method_choice == '6':
