@@ -417,6 +417,33 @@ def method_8():
         input("Press Enter to go back to the main menu...")
         main()  # Go back to the main menu
 
+def method_9():
+    clear_screen_and_print_logo()
+    file_paths = input_file_path()
+    
+    if isinstance(file_paths, str):  # If a single custom file path is provided
+        file_paths = [file_paths]
+
+    not_found_files = []
+
+    for file_path in file_paths:
+        if not os.path.exists(file_path):
+            not_found_files.append(file_path)
+        else:
+            data = read_data_from_file(file_path)
+            # Filter lines containing 'Md', 'MD', or 'Md.'
+            chakma_lines = [line for line in data if any(prefix in line for prefix in ["Chakma", "Marma.", "MD", "Sk"])]
+            save_data_to_file(chakma_lines, file_path)
+            print(f"\rProcessing completed. Remaining Uid: {GREEN}{len(md_lines)}{reset_text}\n")
+    
+    if not_found_files:
+        print("The following files were not found:")
+        for file_path in not_found_files:
+            print(file_path)
+        input("Press Enter to go back to the main menu...")
+        main()  # Go back to the main menu
+            
+
 def main():
     sys.stdout.write('\x1b]2; INCEPTION \x07')
     clear_screen_and_print_logo()
