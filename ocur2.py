@@ -139,7 +139,7 @@ def filter_names(data, inn):
     return filtered_data
     
     
-def rm_bd(data, bdn):
+def rm_bd(data, chk):
     print("Removing Bangladeshi Uid...")
     filtered_data = []
     
@@ -148,7 +148,7 @@ def rm_bd(data, bdn):
             uid, name = entry.split('|', 1)
             
             # If the name is NOT a common Bangladeshi name, keep it
-            if not any(common_name in name for common_name in bdn):
+            if not any(common_name in name for common_name in chk):
                 filtered_data.append(entry)
         else:
             print(f"Ignoring line: {entry} (Does not contain expected format)")
