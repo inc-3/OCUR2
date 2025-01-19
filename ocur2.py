@@ -6,6 +6,7 @@ import re
 from bs4 import BeautifulSoup
 from BD import bdn
 from IN import inn
+from CHK import chk
 
 # COLOURS
 GREEN = "\33[38;5;46m"
@@ -267,7 +268,7 @@ def chk():
         else:
             data = read_data_from_file(file_path)
             data = remove_duplicates_by_uid(data)
-            filtered_data = rm_bd(data, bdn)
+            filtered_data = rm_bd(data, chk)
             sorted_data = sort_data_lexicographically_desc(filtered_data)
             save_data_to_file(sorted_data, file_path)
             print(f"\rProcessing completed Remaining Uid: {GREEN}{len(filtered_data)}{reset_text}\n")
