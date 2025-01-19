@@ -72,8 +72,7 @@ def input_file_path():
         return ['/sdcard/1.txt', '/sdcard/2.txt', '/sdcard/3.txt', '/sdcard/4.txt',
                 '/sdcard/5.txt', '/sdcard/6.txt', '/sdcard/7.txt', '/sdcard/8.txt']
 
-def chk(name):
-    bengali_pattern = re.compile("[\u0980-\u09FF]")
+def chk1(name):
     return any(common_name in name for common_name in chk)
 
 def is_bangladeshi(name):
@@ -155,7 +154,7 @@ def filter_non_bangladeshi_names(data):
     for entry in data:
         if '|' in entry:
             number, name = entry.split('|', 1)  # Split only at the first occurrence of '|'
-            if not chk(name):  # Keep if the name is NOT Bangladeshi
+            if not chk1(name):  # Keep if the name is NOT Bangladeshi
                 filtered_data.append(entry)
         else:
             print(f"Ignoring line: {entry} (Does not contain expected format)")
@@ -274,7 +273,7 @@ def chk():
         else:
             data = read_data_from_file(file_path)
             data = remove_duplicates_by_uid(data)
-            filtered_data = filter_non_bangladeshi_names(data, chk)
+            filtered_data = filter_non_bangladeshi_names(data, chk1)
             sorted_data = sort_data_lexicographically_desc(filtered_data)
             save_data_to_file(sorted_data, file_path)
             print(f"\rProcessing completed Remaining Uid: {GREEN}{len(filtered_data)}{reset_text}\n")
