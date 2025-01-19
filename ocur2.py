@@ -141,7 +141,7 @@ def filter_names(data, inn):
     
 def rm_bd(data, chk):
     print("Removing Bangladeshi Uid...")
-    filtered_data = []
+    fdata = []
     
     for entry in data:
         if '|' in entry:
@@ -149,11 +149,11 @@ def rm_bd(data, chk):
             
             # If the name is NOT a common Bangladeshi name, keep it
             if not any(common_name in name for common_name in chk):
-                filtered_data.append(entry)
+                fdata.append(entry)
         else:
             print(f"Ignoring line: {entry} (Does not contain expected format)")
     
-    return filtered_data
+    return fdata
 
 
 
@@ -268,8 +268,8 @@ def chk():
         else:
             data = read_data_from_file(file_path)
             data = remove_duplicates_by_uid(data)
-            filtered_data = rm_bd(data, chk)
-            sorted_data = sort_data_lexicographically_desc(filtered_data)
+            fdata = rm_bd(data, chk)
+            sorted_data = sort_data_lexicographically_desc(fdata)
             save_data_to_file(sorted_data, file_path)
             print(f"\rProcessing completed Remaining Uid: {GREEN}{len(filtered_data)}{reset_text}\n")
 
