@@ -431,7 +431,7 @@ def main():
     elif method_choice == '3':
         dup()
     elif method_choice == '4':
-        chk()
+        filter_non_bangladeshi_names()
     elif method_choice == '5':
         method_5()
     elif method_choice == '6':
