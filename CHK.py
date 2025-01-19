@@ -281,5 +281,8 @@ chk = {
     "Feda", "Mita", "Billa", "Konika", "Sopak", "Asaful", "Mayor", "Kaiyum", "Afiya", 
     "Sadik", "Riya", "Eliza", "Ayunda", "Mintu", "Ripon", "Sagor", "Marzia", "Hridoy", 
     "Juti", "Robi", "Billu", "Roni", "Mohima", "Shaifan", "Arabi", "Oziha", "Judai", 
-    "Mow", "Emon", "Motin", "Ikbal", "Radi", "Lila", "Rayhan", "Muktha", "Limon"
+    "Mow", "Emon", "Motin", "Ikbal", "Radi", "Lila", "Rayhan", "Muktha", "Limon", "ক", "খ", "গ", "ঘ", "ঙ", "চ", "ছ", "জ", "ঝ", "ঞ", "ট", "ঠ", 
+    "ড", "ঢ", "ণ", "ত", "থ", "দ", "ধ", "ন", "প", "ফ", "ব", "ভ", 
+    "ম", "য", "র", "ল", "শ", "ষ", "স", "হ", "ড়", "ঢ়", "য়", "অ", 
+    "আ", "ই", "ঈ", "উ", "ঊ", "ঋ", "এ", "ঐ", "ও", "ঔ"
 }
