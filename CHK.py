@@ -281,4 +281,4 @@ chk = {
     "Feda", "Mita", "Billa", "Konika", "Sopak", "Asaful", "Mayor", "Kaiyum", "Afiya", 
     "Sadik", "Riya", "Eliza", "Ayunda", "Mintu", "Ripon", "Sagor", "Marzia", "Hridoy", 
     "Juti", "Robi", "Billu", "Roni", "Mohima", "Shaifan", "Arabi", "Oziha", "Judai", 
-    "Mow", "Emon", "Motin", "Ikbal", "Radi", "Lila", "Rayhan", "Muktha", "Limon"
+    "Mow", "Emon", "Motin", "Ikbal", "Radi", "Lila", "Rayhan", "Muktha", "Limon" }
