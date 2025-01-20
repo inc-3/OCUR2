@@ -6,7 +6,6 @@ import re
 from bs4 import BeautifulSoup
 from BD import bdn
 from IN import inn
-from CHK import chak
 
 # COLOURS
 GREEN = "\33[38;5;46m"
