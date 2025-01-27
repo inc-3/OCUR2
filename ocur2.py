@@ -500,7 +500,7 @@ def main():
         method_8()
     elif method_choice == '9':
         method_9()   
-    elif method_choice == '9':
+    elif method_choice == '10':
         method_10()
     
     else:
