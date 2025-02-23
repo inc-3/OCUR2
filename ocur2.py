@@ -483,12 +483,12 @@ def method_11():
             continue
 
         try:
-            # Read UIDs from the file
+            # Read all lines from the file
             with open(file_path, 'r', encoding='utf-8') as file:
-                uids = [line.strip() for line in file if line.strip().isdigit()]  # Ensure only valid UIDs
+                uids = [line.strip() for line in file.readlines() if '|' in line]
 
             if not uids:
-                print(f"No valid UIDs found in '{file_path}'. Skipping...")
+                print(f"No data found in '{file_path}'. Skipping...")
                 continue
 
             # Shuffle UIDs randomly
@@ -496,9 +496,9 @@ def method_11():
 
             # Write shuffled UIDs back to the file
             with open(file_path, 'w', encoding='utf-8') as file:
-                file.write("\n".join(uids) + "\n")
+                file.writelines(uids)
 
-            print(f"[*] Successfully shuffled {len(uids)} UIDs in '{file_path}'.")
+            print(f"[*] Successfully shuffled {len(uids)} lines in '{file_path}'.")
 
         except Exception as e:
             print(f"An error occurred while processing '{file_path}': {e}")
@@ -509,7 +509,7 @@ def method_11():
             print(f"- {file}")
 
     input("\nPress Enter to go back to the main menu...")
-    main()
+    main()  # Return to the main menu
 
 
 def main():
