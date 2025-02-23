@@ -466,7 +466,7 @@ def method_10():
         input("Press Enter to go back to the main menu...")
         main()
 
-def method_8():
+def method_11():
     clear_screen_and_print_logo()
     print("[*] Shuffle UIDs Randomly in a File")
 
