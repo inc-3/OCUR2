@@ -466,7 +466,50 @@ def method_10():
         input("Press Enter to go back to the main menu...")
         main()
 
+def method_11():
+    clear_screen_and_print_logo()
+    print("[*] Shuffle UIDs Randomly in a File")
 
+    file_paths = input_file_path()  # Get file paths
+
+    if isinstance(file_paths, str):  # If a single file path is provided, convert it into a list
+        file_paths = [file_paths]
+
+    not_found_files = []
+
+    for file_path in file_paths:
+        if not os.path.exists(file_path):
+            not_found_files.append(file_path)
+            continue
+
+        try:
+            # Read UIDs from the file
+            with open(file_path, 'r', encoding='utf-8') as file:
+                uids = [line.strip() for line in file if line.strip().isdigit()]  # Ensure only valid UIDs
+
+            if not uids:
+                print(f"No valid UIDs found in '{file_path}'. Skipping...")
+                continue
+
+            # Shuffle UIDs randomly
+            random.shuffle(uids)
+
+            # Write shuffled UIDs back to the file
+            with open(file_path, 'w', encoding='utf-8') as file:
+                file.write("\n".join(uids) + "\n")
+
+            print(f"[*] Successfully shuffled {len(uids)} UIDs in '{file_path}'.")
+
+        except Exception as e:
+            print(f"An error occurred while processing '{file_path}': {e}")
+
+    if not_found_files:
+        print("\nThe following files were not found:")
+        for file in not_found_files:
+            print(f"- {file}")
+
+    input("\nPress Enter to go back to the main menu...")
+    main()
 
 
 def main():
@@ -477,7 +520,7 @@ def main():
     print('[2] Remove Indian Uid')
     print('[3] Remove Duplicate Uid')
     print('[4] Remove Bangladeshi uid')
-    print('[5] Remove MD from file')
+    print('[5] Separate name')
     print('[6] Short uid lexicographically\n')
 
     method_choice = input('[?] Your Choice : ').strip()
@@ -502,6 +545,9 @@ def main():
         method_9()   
     elif method_choice == '10':
         method_10()
+    elif method_choice == '11':
+        method_11()
+        
     
     else:
         print("Invalid choice")
