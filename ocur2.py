@@ -513,6 +513,55 @@ def method_11():
     main()  # Return to the main menu
 
 
+def method_12():
+    clear_screen_and_print_logo()
+    print("[*] Remove 'Md ' Prefix from Names in UID|PASS Files")
+
+    file_paths = input_file_path()  # Get file paths
+
+    if isinstance(file_paths, str):  # If a single file path is provided, convert it into a list
+        file_paths = [file_paths]
+
+    not_found_files = []
+
+    for file_path in file_paths:
+        if not os.path.exists(file_path):
+            not_found_files.append(file_path)
+            continue
+
+        try:
+            modified_lines = []
+            with open(file_path, 'r', encoding='utf-8') as file:
+                lines = [line.strip() for line in file.readlines() if '|' in line]
+
+            if not lines:
+                print(f"No valid UID|PASS data found in '{file_path}'. Skipping...")
+                continue
+
+            # Process each line and remove 'Md ' prefix
+            for line in lines:
+                uid, name = line.split('|', 1)
+                if name.startswith("Md ","Md", "Md. "):
+                    name = name[3:]  # Remove "Md " prefix
+                modified_lines.append(f"{uid}|{name}")
+
+            # Write modified data back to the same file
+            with open(file_path, 'w', encoding='utf-8') as file:
+                file.writelines(line + '\n' for line in modified_lines)
+
+            print(f"[*] Successfully removed 'Md ' prefix in '{file_path}'.")
+
+        except Exception as e:
+            print(f"An error occurred while processing '{file_path}': {e}")
+
+    if not_found_files:
+        print("\nThe following files were not found:")
+        for file in not_found_files:
+            print(f"- {file}")
+
+    input("\nPress Enter to go back to the main menu...")
+    main()  # Return to the main menu
+
 def main():
     sys.stdout.write('\x1b]2; INCEPTION \x07')
     clear_screen_and_print_logo()
@@ -548,6 +597,8 @@ def main():
         method_10()
     elif method_choice == '11':
         method_11()
+    elif method_choice == '12':
+        method_12()    
         
     
     else:
