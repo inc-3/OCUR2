@@ -467,9 +467,9 @@ def method_10():
         input("Press Enter to go back to the main menu...")
         main()
 
-def method_11():
+def method_12():
     clear_screen_and_print_logo()
-    print("[*] Shuffle UIDs Randomly in a File")
+    print("[*] Remove 'Md ', 'Md. ', and 'Mst ' Prefix from Names in UID|PASS Files")
 
     file_paths = input_file_path()  # Get file paths
 
@@ -484,7 +484,7 @@ def method_11():
             continue
 
         try:
-            # Read all lines from the file
+            modified_lines = []
             with open(file_path, 'r', encoding='utf-8') as file:
                 lines = [line.strip() for line in file.readlines() if '|' in line]
 
@@ -492,14 +492,20 @@ def method_11():
                 print(f"No valid UID|PASS data found in '{file_path}'. Skipping...")
                 continue
 
-            # Shuffle UIDs randomly
-            random.shuffle(lines)
+            # Process each line and remove unwanted prefixes
+            for line in lines:
+                uid, name = line.split('|', 1)
+                for prefix in ["Md ", "Md. ", "Mst "]:
+                    if name.startswith(prefix):
+                        name = name[len(prefix):]  # Remove the prefix
+                        break  # Stop checking once a prefix is removed
+                modified_lines.append(f"{uid}|{name}")
 
-            # Write shuffled UIDs back to the file
+            # Write modified data back to the same file
             with open(file_path, 'w', encoding='utf-8') as file:
-                file.writelines(line + '\n' for line in lines)
+                file.writelines(line + '\n' for line in modified_lines)
 
-            print(f"[*] Successfully shuffled {len(lines)} UIDs in '{file_path}'.")
+            print(f"[*] Successfully removed prefixes in '{file_path}'.")
 
         except Exception as e:
             print(f"An error occurred while processing '{file_path}': {e}")
@@ -511,7 +517,6 @@ def method_11():
 
     input("\nPress Enter to go back to the main menu...")
     main()  # Return to the main menu
-
 
 def method_12():
     clear_screen_and_print_logo()
