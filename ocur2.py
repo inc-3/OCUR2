@@ -542,7 +542,7 @@ def method_12():
             # Process each line and remove unwanted prefixes
             for line in lines:
                 uid, name = line.split('|', 1)
-                for prefix in ["Md ", "Md. ", "Mst ", "MD", "Md"]:
+                for prefix in ["Md ", "Md. ", "Mst ", "MD ",]:
                     if name.startswith(prefix):
                         name = name[len(prefix):]  # Remove the prefix
                         break  # Stop checking once a prefix is removed
