@@ -541,7 +541,7 @@ def method_12():
             # Process each line and remove 'Md ' prefix
             for line in lines:
                 uid, name = line.split('|', 1)
-                if name.startswith("Md ","Md", "Md. "):
+                if name.startswith("Md "):
                     name = name[3:]  # Remove "Md " prefix
                 modified_lines.append(f"{uid}|{name}")
 
