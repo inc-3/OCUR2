@@ -152,9 +152,6 @@ def remove_duplicates_by_uid(data):
     return filtered_data
 
 def filter_names(data, inn):
-    print("Removing Indian Uid...")
-
-def filter_names(data, inn):
     print("Removing Indian UIDs...")
     filtered_data = []
     for entry in data:
@@ -162,7 +159,7 @@ def filter_names(data, inn):
             uid, name = entry.strip().split('|', 1)
             # Check if any part contains Indian keywords or Arabic/Hindi characters
             if not any(
-                any(keyword in part for keyword in inn) or contains_arabic(part) or contains_hindi(part)
+                any(keyword in part for keyword in inn) or contains_arabic(part) or contains_hindi(part) or contains_bangla(part)
                 for part in name.strip().split()
             ):
                 filtered_data.append(entry)
