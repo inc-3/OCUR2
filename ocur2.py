@@ -130,6 +130,10 @@ def save_data_to_file(data, file_path):
 def contains_arabic(text):
     arabic_re = re.compile(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]')
     return bool(arabic_re.search(text))
+
+def contains_bangla(text):
+    arabic_re = re.compile("[\u0980-\u09FF]")
+    return bool(arabic_re.search(text))
        
 def contains_hindi(text):
     hindi_re = re.compile(r'[\u0900-\u097F]')
@@ -144,21 +148,29 @@ def remove_duplicates_by_uid(data):
         uid = entry.split('|', 1)[0]
         if uid not in seen_uids:
             seen_uids.add(uid)
-            filtered_data.append(entry)
+            filtered_data.append(entry)    
     return filtered_data
 
 def filter_names(data, inn):
     print("Removing Indian Uid...")
+
+def filter_names(data, inn):
+    print("Removing Indian UIDs...")
     filtered_data = []
     for entry in data:
-        uid, name = entry.split('|', 1)
-        
-        # Check if any part contains Indian IN or Arabic characters
-        if not any(any(keyword in part for keyword in inn) or contains_arabic(part) or contains_hindi(part) for part in name.strip().split()):
-            filtered_data.append(entry)
-    
+        try:
+            uid, name = entry.strip().split('|', 1)
+            # Check if any part contains Indian keywords or Arabic/Hindi characters
+            if not any(
+                any(keyword in part for keyword in inn) or contains_arabic(part) or contains_hindi(part)
+                for part in name.strip().split()
+            ):
+                filtered_data.append(entry)
+            else:
+                print(f"Ignoring line: {entry}")
+        except ValueError:
+            print(f"Skipping invalid line: {entry}")
     return filtered_data
-
 
 
 def sort_data_lexicographically_desc(data):
