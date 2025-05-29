@@ -151,48 +151,29 @@ def remove_duplicates_by_uid(data):
             filtered_data.append(entry)    
     return filtered_data
 
-def filter_names(data, inn):
-    print("Removing Indian UIDs...")
-
+def remove_indian(data, inn):
+    print("Filtering UIDs with Indian-related names...")
     filtered_data = []
     skipped_lines = []
-
-    with open(file_path, 'r', encoding='utf-8') as f:
-        lines = f.readlines()
-
-    for entry in lines:
+    for entry in data:
         entry = entry.strip()
         if not entry:
-            continue  # Skip empty lines
+            continue
         try:
             uid, name = entry.split('|', 1)
             name_parts = name.strip().split()
-
-            # Check if name contains Indian-related elements
-            contains_indian = False
-            for part in name_parts:
-                if any(keyword.lower() in part.lower() for keyword in inn):
-                    contains_indian = True
-                    break
-                if contains_arabic(part) or contains_hindi(part):
-                    contains_indian = True
-                    break
-
+            contains_indian = any(
+                any(keyword.lower() in part.lower() for keyword in inn) or
+                contains_arabic(part) or contains_hindi(part)
+                for part in name_parts
+            )
             if contains_indian:
                 skipped_lines.append(entry)
             else:
                 filtered_data.append(entry)
-
         except ValueError:
-            # Skip invalid lines
             print(f"Skipping invalid line: {entry}")
-
-    # Optionally save filtered data back to the same file
-    with open(file_path, 'w', encoding='utf-8') as f:
-        for line in filtered_data:
-            f.write(line + '\n')
-
-    print(f"Filtered {len(skipped_lines)} entries. Saved {len(filtered_data)} valid entries to {file_path}")
+    print(f"Filtered {len(skipped_lines)} entries. Remaining: {len(filtered_data)}")
     return filtered_data
 
 
@@ -257,7 +238,7 @@ def method_2():
         else:
             data = read_data_from_file(file_path)
             data = remove_duplicates_by_uid(data)
-            filtered_data = filter_names(data, inn)
+            filtered_data = remove_indian(data, inn)
             sorted_data = sort_data_lexicographically_desc(filtered_data)
             save_data_to_file(sorted_data, file_path)
             print(f"\rProcessing completed Remaining Uid: {GREEN}{len(filtered_data)}{reset_text}\n")
