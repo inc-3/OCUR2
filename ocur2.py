@@ -153,20 +153,46 @@ def remove_duplicates_by_uid(data):
 
 def filter_names(data, inn):
     print("Removing Indian UIDs...")
+
     filtered_data = []
-    for entry in data:
+    skipped_lines = []
+
+    with open(file_path, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+
+    for entry in lines:
+        entry = entry.strip()
+        if not entry:
+            continue  # Skip empty lines
         try:
-            uid, name = entry.strip().split('|', 1)
-            # Check if any part contains Indian keywords or Arabic/Hindi characters
-            if not any(
-                any(keyword in part for keyword in inn) or contains_arabic(part) or contains_hindi(part) or contains_bangla(part)
-                for part in name.strip().split()
-            ):
-                filtered_data.append(entry)
+            uid, name = entry.split('|', 1)
+            name_parts = name.strip().split()
+
+            # Check if name contains Indian-related elements
+            contains_indian = False
+            for part in name_parts:
+                if any(keyword.lower() in part.lower() for keyword in inn):
+                    contains_indian = True
+                    break
+                if contains_arabic(part) or contains_hindi(part):
+                    contains_indian = True
+                    break
+
+            if contains_indian:
+                skipped_lines.append(entry)
             else:
-                print(f"Ignoring line: {entry}")
+                filtered_data.append(entry)
+
         except ValueError:
+            # Skip invalid lines
             print(f"Skipping invalid line: {entry}")
+
+    # Optionally save filtered data back to the same file
+    with open(file_path, 'w', encoding='utf-8') as f:
+        for line in filtered_data:
+            f.write(line + '\n')
+
+    print(f"Filtered {len(skipped_lines)} entries. Saved {len(filtered_data)} valid entries to {file_path}")
     return filtered_data
 
 
