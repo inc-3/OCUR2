@@ -132,8 +132,8 @@ def contains_arabic(text):
     return bool(arabic_re.search(text))
 
 def contains_bangla(text):
-    arabic_re = re.compile("[\u0980-\u09FF]")
-    return bool(arabic_re.search(text))
+    bangla_re = re.compile("[\u0980-\u09FF]")
+    return bool(bangla_re.search(text))
        
 def contains_hindi(text):
     hindi_re = re.compile(r'[\u0900-\u097F]')
