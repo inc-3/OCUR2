@@ -315,7 +315,8 @@ def method_5():
         else:
             data = read_data_from_file(file_path)
             # Filter lines containing 'Md', 'MD', or 'Md.'
-            md_lines = [line for line in data if any(prefix in line for prefix in ["Md", "Md.", "MD", "Sk"])]
+            ##md_lines = [line for line in data if any(prefix in line for prefix in ["Md", "Md.", "MD", "Sk"])]
+            md_lines = [line for line in data if any(prefix in line for prefix in ['Sharma', 'Verma', 'Singh', 'Patel', 'Kumar', 'Jain', 'Gupta', 'Srivastava', 'Choudhury', 'Yadav', 'Reddy', 'Rao', 'Shah', 'Mehta', 'Mishra', 'Tiwari', 'Dubey', 'Joshi', 'Pandey', 'Goel', 'Agarwal', 'Malhotra', 'Soni', 'Chopra', 'Arora', 'Khurana', 'Bhargava', 'Dhawan', 'Saxena', 'Goyal'])]
             save_data_to_file(md_lines, file_path)
             print(f"\rProcessing completed. Remaining Uid: {GREEN}{len(md_lines)}{reset_text}\n")
     
@@ -625,3 +626,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
